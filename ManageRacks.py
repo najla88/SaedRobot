@@ -138,7 +138,7 @@ class ManageRack():
         		self.tree_selection.unselect_all()
         		self.DelBtn.set_sensitive(False)
         		dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"The Rack has been deleted successfully")
-        		dialog.set_title("Confirmation message")
+        		dialog1.set_title("Confirmation message")
         		dialog1.run()
         		dialog1.close()
         		dialog.close()

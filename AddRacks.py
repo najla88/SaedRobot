@@ -104,7 +104,10 @@ class AddRack():
 		cA1.execute("SELECT RACKNAME from movement where STATE=0")
 		list3A = cA1.fetchall()
 		dbA1.close()
-		
+		dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"The Rack has been added successfully")
+		dialog1.set_title("Confirmation message")
+		dialog1.run()
+		dialog1.close()
 				
 		self.software_liststore.clear()
 		#Creating the ListStore model
@@ -131,10 +134,7 @@ class AddRack():
         	self.scrollable_treelist.add(self.treeview)	
         	self.tree_selection.unselect_all()
         	self.Add1Btn.set_sensitive(False)
-        	dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"The Rack has been added successfully")
-        	dialog.set_title("Confirmation message")
-        	dialog1.run()
-        	dialog1.close()
+       
         			
         	
 

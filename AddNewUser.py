@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #written by : Reem AlJunaid, CS, Imam Abdulrahman AlFaisal University
 import gi
 gi.require_version('Gtk', '3.0')
@@ -9,6 +10,7 @@ from validate_email import validate_email
 import re
 import login
 import ManageUsersAccounts
+import subprocess
         		
 class AddNewUser():
 
@@ -22,25 +24,36 @@ class AddNewUser():
     
     #starting function
     def __init__(self, Username, kind):
-	self.MyUsername = Username
-	self.userType=kind
-	self.builder = Gtk.Builder()
-	self.builder.add_from_file("Saed.glade")
-	self.window = self.builder.get_object("window3")
-	self.username = self.builder.get_object("username")
-        self.email = self.builder.get_object("email")	
-	addBtn=self.builder.get_object("addBtn1")
-	logoutBtn=self.builder.get_object("logoutBtn3")
-	addBtn.connect("clicked",self.onAddNewUserButtonPressed)
-	logoutBtn.connect("clicked",self.onLogoutButtonPressed)
-	backbox=self.builder.get_object("backbox3")
-	backbox.connect("button-release-event",self.onBackToManageUsersButtonPressed)
-	image=self.builder.get_object("image3")
-	image.set_visible(1)
-	backbox.set_sensitive(1)
-        self.window.show_all()
+		self.MyUsername = Username
+		self.userType=kind
+		self.builder = Gtk.Builder()
+		self.builder.add_from_file("Saed.glade")
+		self.window = self.builder.get_object("window3")
+		self.username = self.builder.get_object("username")
+		self.email = self.builder.get_object("email")	
+		addBtn=self.builder.get_object("addBtn1")
+		logoutBtn=self.builder.get_object("logoutBtn3")
+		addBtn.connect("clicked",self.onAddNewUserButtonPressed)
+		logoutBtn.connect("clicked",self.onLogoutButtonPressed)
+		backbox=self.builder.get_object("backbox3")
+		backbox.connect("button-release-event",self.onBackToManageUsersButtonPressed)
+		image=self.builder.get_object("image3")
+		image.set_visible(1)
+		backbox.set_sensitive(1)
+		self.window.show_all()
 
+		self.username.connect("focus-in-event",self.focus_in)
+		self.username.connect("focus-out-event",self.focus_out)
+		self.email.connect("focus-in-event",self.focus_in)
+		self.email.connect("focus-out-event",self.focus_out)
 
+	#show keyboard when the field is in focus
+    def focus_in(self, entry, event):
+		subprocess.Popen(["onboard","20*10"])
+	#show keyboard when the field is in focus
+    def focus_out(self, entry, event):
+		subprocess.Popen(["pkill","onboard"])
+		
     def onAddNewUserButtonPressed(self, button):
         
         db = sqlite3.connect('SaedRobot.db')

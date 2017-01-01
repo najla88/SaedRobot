@@ -6,6 +6,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk,Gdk
 import maryam
 import login
+import subprocess
 
 class forgot():
 	
@@ -33,7 +34,17 @@ class forgot():
 		
 	
 		self.window.show()
+		email = self.builder.get_object("email") # get the value from the field
+		email.connect("focus-in-event",self.focus_in)
+		email.connect("focus-out-event",self.focus_out)
 
+	#show keyboard when the field is in focus
+	def focus_in(self, entry, event):
+		subprocess.Popen(["onboard","20*10"])
+	#show keyboard when the field is in focus
+	def focus_out(self, entry, event):
+		subprocess.Popen(["pkill","onboard"])
+		
 	#back to the previous screen
 	def back(self,button,a):
 		self.window.destroy()

@@ -6,6 +6,8 @@ from gi.repository import Gtk
 import maryam
 import MainAdminMenu
 import login
+import subprocess
+import signal
 
 class ScanTape():
 	builder =None
@@ -43,6 +45,9 @@ class ScanTape():
 		ScanBtn=self.builder.get_object("Scan")
 		self.barcode1 = self.builder.get_object("barcode")
 		self.barcode1.set_text("")
+	#	self.barcode1.connect("focus-in-event",self.focus_in)
+	#	self.barcode1.connect("focus-out-event",self.focus_out)
+		
 		ScanBtn.connect("clicked",self.Scan)
 		self.tapesList= tl
 		if self.tapesList != None:
@@ -50,6 +55,12 @@ class ScanTape():
 		#show
 		self.window.show()
 	
+	#show keyboard when the field is in focus
+	#def focus_in(self, entry, event):
+	#	subprocess.Popen(["onboard","20*10"])
+	#show keyboard when the field is in focus
+	#def focus_out(self, entry, event):
+	#	subprocess.Popen(["pkill","onboard"])
 	#start scanning
 	def Scan(self,button):
 		#Get the Barcode and move to tape info interface

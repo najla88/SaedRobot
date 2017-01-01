@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #written by : Najla AlGhofaili, CS, Imam Abdulrahman AlFaisal University
 import sqlite3
 from common import id_generator,send_email
@@ -7,6 +8,7 @@ from gi.repository import Gtk,Gdk
 import maryam
 import MainAdminMenu
 import forgotPass
+import subprocess
 
 
 
@@ -36,6 +38,15 @@ class loginClass():
 		image.set_visible(0)
 		backbox.set_sensitive(0)
 		logout.set_sensitive(0)
+		
+		# in/out focus keyboard connections
+		username = self.builder.get_object("username")
+		password = self.builder.get_object("password")
+		
+		username.connect("focus-in-event",self.focus_in)
+		#username.connect("focus-out-event",self.focus_out)
+		password.connect("focus-in-event",self.focus_in)
+		password.connect("focus-out-event",self.focus_out)
 		
 		#to style the screens using CSS code
 		style_provider = Gtk.CssProvider()
@@ -118,7 +129,13 @@ class loginClass():
 		self.window.show()
 		
 		
-
+	#show keyboard when the field is in focus
+	def focus_in(self, entry, event):
+		subprocess.Popen(["onboard","20*10"])
+	#show keyboard when the field is in focus
+	def focus_out(self, entry, event):
+		subprocess.Popen(["pkill","onboard"])
+	
 	#login the user to the system
 	def login(self,button):
 		

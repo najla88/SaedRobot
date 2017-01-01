@@ -8,6 +8,7 @@ import ManageUsersAccounts
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from validate_email import validate_email
+import subprocess
 
 class UpdateUser():
 	builder =None
@@ -63,6 +64,17 @@ class UpdateUser():
 			dialog.run()
 			dialog.close()
 			print "Warning dialog closed"
+			
+	
+		email.connect("focus-in-event",self.focus_in)
+		email.connect("focus-out-event",self.focus_out)
+
+	#show keyboard when the field is in focus
+	def focus_in(self, entry, event):
+		subprocess.Popen(["onboard","20*10"])
+	#show keyboard when the field is in focus
+	def focus_out(self, entry, event):
+		subprocess.Popen(["pkill","onboard"])
 		# event listener for Update button
 	def Update(self,button):
 		# take all the data in the input fields

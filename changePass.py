@@ -6,6 +6,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk,Gdk
 import maryam
 import login
+import subprocess
 
 
 class change_password():
@@ -54,7 +55,23 @@ class change_password():
 		
 		
 		self.window.show()
+		
+		self.oldPassEntry.connect("focus-in-event",self.focus_in)
+		self.oldPassEntry.connect("focus-out-event",self.focus_out)
+		
+		self.newPassEntry.connect("focus-in-event",self.focus_in)
+		self.newPassEntry.connect("focus-out-event",self.focus_out)
+		
+		self.conPassEntry.connect("focus-in-event",self.focus_in)
+		self.conPassEntry.connect("focus-out-event",self.focus_out)
 
+	#show keyboard when the field is in focus
+	def focus_in(self, entry, event):
+		subprocess.Popen(["onboard","20*10"])
+	#show keyboard when the field is in focus
+	def focus_out(self, entry, event):
+		subprocess.Popen(["pkill","onboard"])
+		
 	#clear all the fields
 	def clear(self,button):
 		self.oldPassEntry.set_text('')
