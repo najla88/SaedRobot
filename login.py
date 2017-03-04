@@ -1,5 +1,5 @@
 #!/usr/bin/python2
-
+import sqlite3
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -18,52 +18,14 @@ class login():
 		
 		username = self.builder.get_object("username")
 		password = self.builder.get_object("password")
-		print username.get_text() + password.get_text()
-
-		
-		
+		db = sqlite3.connect('testDB.db')
+		c = db.cursor()
+		c.execute('SELECT * from users WHERE username= ? AND password= ?' , (str(username.get_text()), str(password.get_text())))
+		data=c.fetchall()
+		if len(data)>0:
+			print "Welcome"
+		else:
+			print "Login failed"
+			
 window=login()
 Gtk.main()
-
-
-"""
-import gi
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
-import gi.repository
-
-class adder:
-
-
-	def __init__( self, number1, number2 ):
-		self.result = int( number1 ) + int( number2 )
-
-	def giveResult( self ):
-		return str(self.result)
-
-class leeroyjenkins:
-
-	wTree = None
-	def __init__( self ):
-		self.wTree = Gtk.Builder()
-		self.wTree.add_from_file("Loin.glade")
-		#self.wTree = builder.XML( "Loin.glade" )
-		
-		dic = { "on_button1_clicked" : self.add,}
-		self.wTree.connect_signals( dic )
-		window = self.wTree.get_object("window1")
-		button=self.wTree.get_object("button1")
-		a=self.wTree.get_object("entry1")
-		window.show()
-		Gtk.main()
-
-
-	def add(self, widget):
-#thistime = adder( self.wTree.get_widget("entryNumber1").get_text(), self.wTree.get_widget("entryNumber2").get_text() )
-		st=self.wTree.get_widget("entry1").get_text()
-		print st
-		self.wTree.get_widget("entry").set_text("new")
-
-
-letsdothis = leeroyjenkins()
-"""
