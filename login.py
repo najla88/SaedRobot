@@ -42,7 +42,7 @@ class forgot():
 			c = db.cursor()
 			c.execute("update users set password=? where username=?" , (randPassword,username,))
 			db.commit()
-			send_email(randPassword,'Your New Password')
+			send_email(randPassword,'Your New Password',email.get_text())
 			dialog=Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"Your new password has been sent to your email")
 			dialog.run()
 			dialog.close()
@@ -113,6 +113,7 @@ class change_password():
 	oldPassEntry = None
 	newPassEntry = None
 	conPassEntry = None
+	Username='najla'
 	
 	def __init__(self):
 		self.builder = Gtk.Builder()
@@ -151,7 +152,7 @@ class change_password():
 		else:
 			db = sqlite3.connect('SaedRobot.db')
 			c = db.cursor()
-			c.execute('SELECT password from users WHERE username= ?' , ( 'test',))
+			c.execute('SELECT password from users WHERE username= ?' , ( self.Username,))
 			
 			row=c.fetchone()
 			print row[0]
@@ -180,7 +181,7 @@ class change_password():
 					else:
 						
 						c = db.cursor()
-						c.execute("update users set password=? where username=?" , (self.newPassEntry.get_text(),'test',))
+						c.execute("update users set password=? where username=?" , (self.newPassEntry.get_text(),self.Username,))
 						db.commit()
 						dialog=Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"your password has been changed")
 						dialog.run()

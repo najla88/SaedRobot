@@ -83,6 +83,8 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="halign">center</property>
+            <property name="visibility">False</property>
+            <property name="input_purpose">password</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -281,6 +283,7 @@
                   <object class="GtkEntry" id="oldPass">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="visibility">False</property>
                     <property name="input_purpose">password</property>
                   </object>
                   <packing>
@@ -305,6 +308,7 @@
                   <object class="GtkEntry" id="newPass">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="visibility">False</property>
                     <property name="input_purpose">password</property>
                   </object>
                   <packing>
@@ -329,6 +333,7 @@
                   <object class="GtkEntry" id="conPass">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="visibility">False</property>
                     <property name="input_purpose">password</property>
                   </object>
                   <packing>
