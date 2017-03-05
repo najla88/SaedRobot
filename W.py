@@ -8,6 +8,11 @@ import string
 import random
 import smtplib
 import sqlite3
+from validate_email import validate_email
+import re
+
+def isValidUsername(username):
+    return re.search("^[A-z][A-z|\.|\s]+$",username) != None
 
 class Handler:
 
@@ -43,23 +48,43 @@ class Handler:
         data1=c1.fetchall()
         
         if len(str(username.get_text())) == 0:
-           print("username is empty")
+           dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "No username entered, please enter a username")
+           dialog.run()
+           dialog.close()
            
         elif len(str(email.get_text())) == 0:
-           print("email is empty")
+           dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "No email entered, please enter an email")
+           dialog.run()
+           dialog.close()
            
         elif len(data)>0:
-             print "This username already exist!"
+           dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "This username is already exist!")
+           dialog.run()
+           dialog.close()
              
         elif len(data1)>0:
-             print "This email is already exist!"            
+           dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "This email is already exist!")
+           dialog.run()
+           dialog.close()
+           
+        elif not re.match("^[a-zA-Z0-9_]+$", str(username.get_text())):
+           dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "Invalid username address, please enter a valid username.")
+           dialog.run()
+           dialog.close()      
+                          
+        elif not validate_email(str(email.get_text())):
+           dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "Invalid email address, please enter a valid address.")
+           dialog.run()
+           dialog.close()
+           
         else:
 			 password = id_generator()
 			 c.execute('INSERT INTO users(USERNAME,PASSWORD,EMAIL,ADMIN) VALUES (?,?,?,0)', (str(username.get_text()),str(password),str(email.get_text())))
 			 db.commit()
 			 send_email(password,"Saed Robot - Account Password",str(email.get_text()) )
-			 window = builder.get_object("window4")
-			 window.show()
+			 dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK, "The user has been added")
+			 dialog.run()
+			 dialog.close()
 
     def onAddUserButtonPressed(self, button):
         print("onAddUserButtonPressed")
