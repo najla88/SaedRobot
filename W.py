@@ -20,19 +20,37 @@ class Handler:
         Gtk.main_quit(*args)
 
     def onCreateNewTaskButtonPressed(self, button): 
-        print("onCreateNewTaskButtonPressed")
-
+        window = builder.get_object("window1")
+        window.destroy()
+        #window = builder.get_object("window2")
+        #window.show()
+        
     def onManageUsersAccountsButtonPressed(self, *args):
-        id_generator()
-        print("onManageUsersAccountsButtonPressed") 
+        window = builder.get_object("window1")
+        window.destroy()
         window = builder.get_object("window2")
         window.show()
 
     def onManageRacksButtonPressed(self, button):
-        print("onManageRacksButtonPressed")
+        window = builder.get_object("window1")
+        window.destroy()
+        #window = builder.get_object("window2")
+        #window.show()
+        
+    def onAddUserButtonPressed(self, button):
+        window = builder.get_object("window2")
+        window.destroy()
+        window = builder.get_object("window3")
+        window.show()
+        
+    def onBackToMainAdminMenuButtonPressed(self, button):
+        print "Helo first back"
+        window = builder.get_object("window2")
+        window.destroy()
+        window = builder.get_object("window1")
+        window.show()
 
     def onAddNewUserButtonPressed(self, *args):
-        print("onAddNewUserButtonPressed")
         username = builder.get_object("username")
         email = builder.get_object("email")
         
@@ -85,16 +103,17 @@ class Handler:
 			 dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK, "The user has been added")
 			 dialog.run()
 			 dialog.close()
-
-    def onAddUserButtonPressed(self, button):
-        print("onAddUserButtonPressed")
+			 
+    def onBackToManageUsersButtonPressed(self, button):
         window = builder.get_object("window3")
+        window.destroy()
+        window = builder.get_object("window2")
         window.show()
-
+        			 
 builder = Gtk.Builder()
 builder.add_from_file("Saed.glade")
 builder.connect_signals(Handler())
-window = builder.get_object("window3")
+window = builder.get_object("window1")
 window.show()
 Gtk.main()
 
