@@ -8,22 +8,23 @@ from gi.repository import Gtk
 class forgot():
 	
 	builder =None
-
+	window= None
     
 	def __init__(self):
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("Loin.glade")
-		window = self.builder.get_object("window2")
+		self.window = self.builder.get_object("window2")
 		backBtn=self.builder.get_object("backBtn")
 		resetBtn=self.builder.get_object("resetBtn")
 		backBtn.connect("clicked",self.back)
 		resetBtn.connect("clicked",self.reset)
 
-		window.show()
+		self.window.show()
 
 
 	def back(self,button):
-		window=login()
+		self.window.destroy()
+		self.window=login()
 	
 	
 	def reset(self,button):
@@ -46,7 +47,7 @@ class forgot():
 			dialog=Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"Your new password has been sent to your email")
 			dialog.run()
 			dialog.close()
-			window=login()
+			self.window=login()
 
 			
 		else:
@@ -68,13 +69,13 @@ class login():
 	def __init__(self):
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("Loin.glade")
-		window = self.builder.get_object("window1")
+		self.window = self.builder.get_object("window1")
 		loginBtn=self.builder.get_object("loginBtn")
 		forgotPassBtn=self.builder.get_object("forgotBtn")
 		loginBtn.connect("clicked",self.login)
 		forgotPassBtn.connect("clicked",self.forgot)
 
-		window.show()
+		self.window.show()
 
 
 	def login(self,button):
@@ -99,8 +100,8 @@ class login():
 			dialog.close()
 			
 	def forgot(self,button):
-		#self.window.hide()
-		window2 =forgot()
+		self.window.destroy()
+		self.window =forgot()
 
 
 
@@ -118,7 +119,7 @@ class change_password():
 	def __init__(self):
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("Loin.glade")
-		window = self.builder.get_object("window3")
+		self.window = self.builder.get_object("window3")
 		
 		clearBtn=self.builder.get_object("clearBtn")
 		changeBtn =self.builder.get_object("changeBtn")
@@ -132,7 +133,7 @@ class change_password():
 		clearBtn.connect("clicked",self.clear)
 		changeBtn.connect("clicked",self.change)
 		backBtn.connect("clicked",self.back)
-		window.show()
+		self.window.show()
 
 
 	def clear(self,button):
