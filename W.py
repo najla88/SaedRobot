@@ -3,26 +3,11 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+from common import id_generator,send_email
 import string
 import random
 import smtplib
 import sqlite3
-
-
-def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
-    return(''.join(random.choice(chars) for _ in range(size)))
-
-
-def sendEmail(password):
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.ehlo()
-    server.starttls()
-    server.login("reem.aljunaid.94@gmail.com", "Vdl 4206")
-    subject = "Sa'ed Robot"
-    msg = 'Your password is ' + password
-    message = 'Subject: {}\n\n{}'.format(subject, msg)
-    server.sendmail("reem.aljunaid.94@gmail.com", "reem.aljunaid@hotmail.com", message)
-
 
 class Handler:
 
@@ -72,7 +57,7 @@ class Handler:
 			 password = id_generator()
 			 c.execute('INSERT INTO users(USERNAME,PASSWORD,EMAIL,ADMIN) VALUES (?,?,?,0)', (str(username.get_text()),str(password),str(email.get_text())))
 			 db.commit()
-			 sendEmail(password)
+			 send_email(password,"Saed Robot - Account Password",str(email.get_text()) )
 			 window = builder.get_object("window4")
 			 window.show()
 
