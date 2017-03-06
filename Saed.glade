@@ -31,7 +31,7 @@
                 <property name="margin_bottom">17</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkButton" id="button1">
+                  <object class="GtkButton" id="createBtn">
                     <property name="label" translatable="yes">Create new task</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -46,7 +46,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button2">
+                  <object class="GtkButton" id="manageUsersBtn">
                     <property name="label" translatable="yes">Manage users accounts</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -61,7 +61,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button3">
+                  <object class="GtkButton" id="manageRacksBtn">
                     <property name="label" translatable="yes">Manage racks</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -145,7 +145,7 @@
                         <property name="margin_top">41</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkButton" id="button4">
+                          <object class="GtkButton" id="addBtn">
                             <property name="label" translatable="yes">Add</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -159,7 +159,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="button5">
+                          <object class="GtkButton" id="backBtn">
                             <property name="label" translatable="yes">Back</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -180,13 +180,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkBox" id="usersTable">
+                      <object class="GtkBox">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_left">23</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkGrid" id="boxxx">
+                          <object class="GtkGrid" id="usersTable">
                             <property name="width_request">200</property>
                             <property name="height_request">200</property>
                             <property name="visible">True</property>
@@ -284,7 +284,7 @@
                         <property name="margin_top">41</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkButton" id="button6">
+                          <object class="GtkButton" id="addBtn1">
                             <property name="label" translatable="yes">Add</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -298,7 +298,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="button7">
+                          <object class="GtkButton" id="backBtn1">
                             <property name="label" translatable="yes">Back</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
