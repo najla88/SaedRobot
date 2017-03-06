@@ -4,6 +4,7 @@ from common import id_generator,send_email
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+import maryam
 
 class forgot():
 	
@@ -24,7 +25,7 @@ class forgot():
 
 	def back(self,button):
 		self.window.destroy()
-		self.window=login()
+		self.window=loginClass()
 	
 	
 	def reset(self,button):
@@ -47,7 +48,7 @@ class forgot():
 			dialog=Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"Your new password has been sent to your email")
 			dialog.run()
 			dialog.close()
-			self.window=login()
+			self.window=loginClass()
 
 			
 		else:
@@ -61,7 +62,7 @@ class forgot():
 
 
 
-class login():
+class loginClass():
 	
 	builder =None
 	window = None
@@ -92,6 +93,8 @@ class login():
 		if len(data)>0:
 			print "Welcome"
 			loginError.set_text('')
+			self.window.destroy()
+			self.window=maryam.userHome()
 
 		else:
 			#loginError.set_text('Invalid username or password, please try again')
@@ -192,7 +195,9 @@ class change_password():
 		
 	def back(self,button):
 		print 'hhhhhh'
+		self.window.destroy()
+		self.window=maryam.userHome()
 
 
-window=login()
-Gtk.main()
+#window=loginClass()
+#Gtk.main()
