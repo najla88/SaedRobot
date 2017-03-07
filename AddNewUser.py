@@ -6,7 +6,6 @@ import string
 import sqlite3
 from validate_email import validate_email
 import re
-import ManageUsersAccounts
 		
 class AddNewUser():
 
@@ -83,6 +82,7 @@ class AddNewUser():
 			 dialog.close()
 			 
     def onBackToManageUsersButtonPressed(self, button):
+        import ManageUsersAccounts
         self.window.destroy()
         self.window=ManageUsersAccounts.ManageUsersAccounts()
 
