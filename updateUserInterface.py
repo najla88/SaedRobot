@@ -2,6 +2,7 @@
 
 import sqlite3
 import gi
+import UserInfoInterface
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
@@ -21,13 +22,13 @@ class UpdateUser():
 		
 		# making event listeners "Clicked"
 		UpdateBtn=self.builder.get_object("Update")
-		BackBtn=self.builder.get_object("Back")
+		BackBtn=self.builder.get_object("Back1")
 		UpdateBtn.connect("clicked",self.Update)
 		BackBtn.connect("clicked",self.Back)
 		
 		window.show()
 		
-		db = sqlite3.connect('testDB.db')
+		db = sqlite3.connect('SaedRobot.db')
 		c = db.cursor()
 		#bring the user's password and paste it in the text field
 		c.execute("SELECT password from users WHERE username=?",(un,))
@@ -35,7 +36,11 @@ class UpdateUser():
 		print getPass[0]
 		if getPass != None:
 			password.set_text(getPass[0])
-		
+		else: # if no password was there alert with warning message 
+			dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Something wrong .. Try Again")
+			dialog.run()
+			dialog.close()
+			print "Warning dialog closed"
 		# event listener for Update button
 	def Update(self,button):
 		# take all the data in the input fields
@@ -51,7 +56,7 @@ class UpdateUser():
 		
 		else:
 			#update the database with the new info
-			db = sqlite3.connect('testDB.db')
+			db = sqlite3.connect('SaedRobot.db')
 			c = db.cursor()
 			c.execute("update users set password =? WHERE username=?", (password.get_text(),(username.get_text())))
 			db.commit()
@@ -64,7 +69,8 @@ class UpdateUser():
 			
 		# event listener for Back button
 	def Back(self,button): # go to the previous interface
-		window3 = self.builder.get_object("window2")
+		username=self.builder.get_object("UN1")
+		window3 = UserInfoInterface.UserInfo(username.get_text())
 		window3.show()
 		
 		
