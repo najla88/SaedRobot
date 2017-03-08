@@ -5,6 +5,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk,Gdk
 import maryam
+import login
 
 class forgot():
 	
@@ -25,7 +26,7 @@ class forgot():
 
 	def back(self,button):
 		self.window.destroy()
-		self.window=loginClass()
+		self.window=login.loginClass()
 	
 	
 	def reset(self,button):
