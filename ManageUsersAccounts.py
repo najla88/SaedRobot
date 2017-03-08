@@ -3,8 +3,6 @@ import gi
 import json
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
-import AddNewUser
-import MainAdminMenu
 
 con = sqlite3.connect('SaedRobot.db')
 cur = con.cursor()
@@ -48,17 +46,19 @@ class ManageUsersAccounts():
         self.scrollable_treelist = Gtk.ScrolledWindow()
         self.scrollable_treelist.set_vexpand(True)
         self.scrollable_treelist.set_hexpand(True)
-        grid.attach(self.scrollable_treelist, 0, 0, 1, 1)
+        grid.attach(self.scrollable_treelist, 0, 0, 8, 10)
         self.scrollable_treelist.add(self.treeview)
 
         self.window.show_all()
 
 
     def onAddUserButtonPressed(self, button):
+        import AddNewUser
         self.window.destroy()
         self.window=AddNewUser.AddNewUser()
         
     def onBackToMainAdminMenuButtonPressed(self, button):
+	import MainAdminMenu
         self.window.destroy()
         self.window=MainAdminMenu.MainAdminMenu()
 

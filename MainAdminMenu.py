@@ -1,7 +1,6 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk 
-import ManageUsersAccounts
 class MainAdminMenu():
 	
 	builder =None
@@ -24,6 +23,7 @@ class MainAdminMenu():
         	#self.window=ManageUsersAccounts.ManageUsersAccounts()
         
     	def onManageUsersAccountsButtonPressed(self, button):
+        	import ManageUsersAccounts
         	self.window.destroy()
         	self.window=ManageUsersAccounts.ManageUsersAccounts()
 
@@ -31,5 +31,5 @@ class MainAdminMenu():
         	self.window.destroy()
         	#self.window=ManageUsersAccounts.ManageUsersAccounts()
         	
-window=MainAdminMenu()
-Gtk.main()
+#window=MainAdminMenu()
+#Gtk.main()
