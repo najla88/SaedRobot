@@ -3,7 +3,7 @@ import sqlite3
 from common import id_generator,send_email
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
+from gi.repository import Gtk,Gdk
 import maryam
 
 class forgot():
@@ -59,8 +59,30 @@ class forgot():
 		c2.execute('SELECT * from users WHERE email=?' , (email.get_text(),))
 		row2=c2.fetchone()
 		print row2
-
-
+"""
+border:1px solid #BEBEBE;
+		padding: 7px;
+		margin:0px;
+		outline: none;
+		border-radius: 1px;
+		
+		
+		
+		
+		
+		
+		box-shadow: 0 0 8px #88D5E9;
+		border: 1px solid #88D5E9;
+		
+		
+		
+		GtkLabel#logLabel{
+		background: #43D1AF;
+		padding-top:20px;
+		padding-bottom:20px;
+		
+		}
+		"""
 
 class loginClass():
 	
@@ -75,8 +97,81 @@ class loginClass():
 		forgotPassBtn=self.builder.get_object("forgotBtn")
 		loginBtn.connect("clicked",self.login)
 		forgotPassBtn.connect("clicked",self.forgot)
+		
+		style_provider = Gtk.CssProvider()
+		css = """
+		
+		GtkWindow{
+		background: #ffffff;
+		}
+		GtkBox#logoMenu{
+		background: #999;
+		}
+		
+		GtkEntry {
+		
+		
+		outline: none;
+		background: #fff;
+		border: 1px solid #ccc;
+		color: #555;
+		font: Arial, Helvetica, sans-serif;
+		padding-top:10px;
+		padding-bottom:10px;
+
+		border-radius: 1px;
+
+		
+		
+		}
+		
+		GtkEntry:focus  {
+		box-shadow: 0 0 5px #43D1AF;
+		border: 1px solid #43D1AF;
+ 
+		
+		}
+		
+		
+		GtkButton {
+		background: #43D1AF;
+		border-radius: 1px;
+		padding: 15px 15px 15px 15px;
+		border: none;
+		color: #fff;
+		}
+		
+		GtkButton:active,GtkButton:hover  {
+		background: #2EBC99;
+		
+		}
+		
+		
+		GtkButton#forgotBtn, GtkButton#forgotBtn:selected {
+		border-radius: 1px;
+		padding: 8px 15px 8px 15px;
+		border: none;
+		color: #333;
+		background: #fff;
+
+		}
+		
+		GtkButton#forgotBtn:hover {
+		background: #fff;
+		color: #43D1AF;
+		
+		}
+		"""
+		style_provider.load_from_data(css)
+		Gtk.StyleContext.add_provider_for_screen(
+		Gdk.Screen.get_default(), 
+		style_provider,     
+		Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+
 
 		self.window.show()
+		
+		
 
 
 	def login(self,button):
