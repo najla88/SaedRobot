@@ -5,6 +5,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk,Gdk
 import maryam
+import MainAdminMenu
 
 
 
@@ -107,13 +108,19 @@ class loginClass():
 		db = sqlite3.connect('SaedRobot.db')
 		c = db.cursor()
 		c.execute('SELECT * from users WHERE username= ? AND password= ?' , (str(username.get_text()), str(password.get_text())))
-		data=c.fetchall()
+		data=c.fetchone()
 		
-		if len(data)>0:
+		if data != None and len(data)>0:
+		
 			print "Welcome"
 			loginError.set_text('')
 			self.window.destroy()
-			self.window=maryam.userHome()
+			if data[3]==0:
+				self.window=maryam.userHome()
+			elif data[3]==1:
+				self.window=MainAdminMenu.MainAdminMenu()
+
+				
 
 		else:
 			#loginError.set_text('Invalid username or password, please try again')
