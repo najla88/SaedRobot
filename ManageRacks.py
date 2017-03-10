@@ -1,7 +1,6 @@
 import sqlite3
 import gi
 import json
-import ManageRacks
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
@@ -30,7 +29,7 @@ class ManageRack(Gtk.Window):
 	
 	def __init__(self):
 		self.builder = Gtk.Builder()
-		self.builder.add_from_file("ManageRacks.glade")
+		self.builder.add_from_file("ManageRack.glade")
 		self.window = self.builder.get_object("window1")
 		self.grid=self.builder.get_object("grid3")
 		AddBtn=self.builder.get_object("AddBtn")
@@ -223,6 +222,6 @@ class AddRack():
 			print "row index = " + model[list_iter][0]
 
 
-window=ManageRack()
-Gtk.main()
+#window=ManageRack()
+#Gtk.main()
 

@@ -10,11 +10,17 @@ class ScanTape():
 	window = None
 	barcode1=None
 	tapesList = None
-	
-	def __init__(self, tl):
+	userType = None
+	Username=None
+	def __init__(self, tl,username,kind ):
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("ScanMoreInterface.glade")
 		self.window = self.builder.get_object("window1")
+		#######################################################
+		self.userType=kind
+		self.Username= username
+		########################################################
+		
 		
 		# connect the buttons and make their event listener
 		ScanBtn=self.builder.get_object("Scan")
@@ -41,7 +47,7 @@ class ScanTape():
 				#move to tapes info with the specific barcode
 				print checkBarcode[0]
 				self.window.destroy()
-				self.window =maryam.tapeInfo(checkBarcode[0] , self.tapesList)
+				self.window =maryam.tapeInfo(checkBarcode[0] , self.tapesList,self.Username,self.userType)
 			else:
 				 # if Barcode is not in the DB alert with warning message 
 				dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Scanned barcode does not belong to our database .. try another one")
@@ -54,5 +60,8 @@ class ScanTape():
 			dialog.run()
 			dialog.close()
 			print "Warning dialog closed"
-		
+
+
+
+###back on scan will check if user or admin		
 

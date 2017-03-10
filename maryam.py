@@ -12,7 +12,6 @@ class userHome():
 	
 	builder =None
 	window = None
-
 	
 	def __init__(self):
 		self.builder = Gtk.Builder()
@@ -22,7 +21,6 @@ class userHome():
 		changePasswordBtn=self.builder.get_object("changePasswordBtn")
 		createTaskBtn.connect("clicked",self.createTask)
 		changePasswordBtn.connect("clicked",self.changePassword)
-		
   
 		self.window.show()
 		
@@ -49,12 +47,15 @@ class tapeInfo():
 	tapesList = None
 	barcode = None
 	hint = None
+	userType=None
+	Username=None
 	
-	def __init__(self,a, tl): # tl = tape list
+	def __init__(self,a, tl,username, kind): # tl = tape list
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("HomeUser.glade")
 		self.window = self.builder.get_object("window2")
-		
+		self.userType=kind
+		self.Username=username
 		scanBtn=self.builder.get_object("scanBtn")
 		proceedBtn=self.builder.get_object("proceedBtn")
 		cancelBtn=self.builder.get_object("cancelBtn")
@@ -94,16 +95,20 @@ class tapeInfo():
 		# this method will append the barcode to the list and send the list back to ScanTape Interface
 		self.tapesList.append(self.barcode)
 		self.window.destroy()
-		self.window=ScanTape.ScanTape(self.tapesList)
+		self.window=ScanTape.ScanTape(self.tapesList,self.Username,self.userType)
 		
 		
 	def proceed(self,button):
 		self.window.destroy() # Go ahead to next interface with the tapelist >> Zainab's interface Choose distnation
-		self.window=scaneMore()
+		#self.window=scaneMore()
+		###########################################
+		#here is zainab ++++++paaaaas theee usertyyyyyyype
+		######################################################
+	
 	
 	def cancel(self,button): #Go to ScanTape interface with the TapeList with no further changes
 		self.window.destroy()
-		self.window=ScanTape.ScanTape(self.tapesList)
+		self.window=ScanTape.ScanTape(self.tapesList,self.userType)
 
 		
 # put thim coment chang the window in the first class to window1

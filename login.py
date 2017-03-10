@@ -135,9 +135,9 @@ class loginClass():
 			loginError.set_text('')
 			self.window.destroy()
 			if data[3]==0:
-				self.window=maryam.userHome()
+				self.window=maryam.userHome(data[0],data[3])
 			elif data[3]==1:
-				self.window=MainAdminMenu.MainAdminMenu()
+				self.window=MainAdminMenu.MainAdminMenu(data[0],data[3])
 
 				
 
