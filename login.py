@@ -6,6 +6,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk,Gdk
 import maryam
 import MainAdminMenu
+import forgotPass
 
 
 
@@ -23,14 +24,32 @@ class loginClass():
 		loginBtn.connect("clicked",self.login)
 		forgotPassBtn.connect("clicked",self.forgot)
 		
+		
+		
+		backbox=self.builder.get_object("backbox")
+		logout=self.builder.get_object("logout")
+		logout.set_label('')
+		logout.connect("button-release-event",self.logout)
+		backbox.connect("button-release-event",self.back)
+		image=self.builder.get_object("image1")
+		image.set_visible(0)
+		backbox.set_sensitive(0)
+		logout.set_sensitive(0)
+		
+		
+		
+		
 		style_provider = Gtk.CssProvider()
+		
 		css = """
+		
+		
 		
 		GtkWindow{
 		background: #ffffff;
 		}
 		GtkBox#logoMenu{
-		background: #999;
+		background: #ffffff;
 		}
 		
 		GtkEntry {
@@ -72,7 +91,7 @@ class loginClass():
 		}
 		
 		
-		GtkButton#forgotBtn, GtkButton#forgotBtn:selected {
+		GtkButton#forgotBtn,GtkButton#logout,  GtkButton#forgotBtn:selected,GtkButton#logout:selected {
 		border-radius: 1px;
 		padding: 8px 15px 8px 15px;
 		border: none;
@@ -81,7 +100,7 @@ class loginClass():
 
 		}
 		
-		GtkButton#forgotBtn:hover {
+		GtkButton#forgotBtn:hover ,GtkButton#logout:hover {
 		background: #fff;
 		color: #43D1AF;
 		
@@ -130,5 +149,11 @@ class loginClass():
 			
 	def forgot(self,button):
 		self.window.destroy()
-		self.window =forgot()
+		self.window =forgotPass.forgot()
+		
+	def back(self,button,a):
+		print 'clicked'	
+		
+	def logout(self,button,a):
+		print 'logout'			
 
