@@ -45,9 +45,16 @@ class ScanTape():
 	
 			if checkBarcode != None:
 				#move to tapes info with the specific barcode
-				print checkBarcode[0]
-				self.window.destroy()
-				self.window =maryam.tapeInfo(checkBarcode[0] , self.tapesList,self.Username,self.userType)
+				if checkBarcode[0] in self.tapesList :
+					dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"You have already scanned this tap")
+					dialog.run()
+					dialog.close()
+					self.barcode1.set_text("")
+					
+				else :
+					print checkBarcode[0]
+					self.window.destroy()
+					self.window =maryam.tapeInfo(checkBarcode[0] , self.tapesList,self.Username,self.userType)
 			else:
 				 # if Barcode is not in the DB alert with warning message 
 				dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Scanned barcode does not belong to our database .. try another one")

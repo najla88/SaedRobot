@@ -14,13 +14,13 @@ class change_password():
 	oldPassEntry = None
 	newPassEntry = None
 	conPassEntry = None
-	Username='najla'
+	Username=None
 	
-	def __init__(self):
+	def __init__(self,username):
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("Loin.glade")
 		self.window = self.builder.get_object("window3")
-		
+		self.Username=username
 		clearBtn=self.builder.get_object("clearBtn")
 		changeBtn =self.builder.get_object("changeBtn")
 		backBtn = self.builder.get_object("backBtn2")

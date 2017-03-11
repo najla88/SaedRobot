@@ -12,11 +12,15 @@ class userHome():
 	
 	builder =None
 	window = None
+	Username=None
+	userType=None
 	
-	def __init__(self):
+	def __init__(self,username,kind):
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("HomeUser.glade")
 		self.window = self.builder.get_object("window1")
+		self.Username=username
+		self.userType=kind
 		createTaskBtn=self.builder.get_object("createTaskBtn")
 		changePasswordBtn=self.builder.get_object("changePasswordBtn")
 		createTaskBtn.connect("clicked",self.createTask)
@@ -29,12 +33,12 @@ class userHome():
 	def createTask(self,button):
 		
 		self.window.destroy()
-		self.window=ScanTape.ScanTape(list())
+		self.window=ScanTape.ScanTape(list(),self.Username,self.userType)
 		##we should have scane class
 			
 	def changePassword(self,button):
 		self.window.destroy()
-		window2 = changePass.change_password()
+		window2 = changePass.change_password(self.Username)
 		
 class tapeInfo():
 	
@@ -50,7 +54,7 @@ class tapeInfo():
 	userType=None
 	Username=None
 	
-	def __init__(self,a, tl,username, kind): # tl = tape list
+	def __init__(self,volser, tl,username, kind): # tl = tape list
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("HomeUser.glade")
 		self.window = self.builder.get_object("window2")
@@ -69,7 +73,7 @@ class tapeInfo():
 		cancelBtn.connect("clicked",self.cancel)
 		
 		self.tapesList= tl
-		self.barcode = a
+		self.barcode = volser
 		
 		#if tapeslist.count() == 3 disable scann btn and hover or hint maxmam 3 tap
 		if self.tapesList!= None and len(self.tapesList) == 2:
@@ -80,7 +84,7 @@ class tapeInfo():
 			
 		db = sqlite3.connect('SaedRobot.db')
 		c = db.cursor()
-		c.execute('SELECT * from inventory WHERE volser= ?' , (a,))
+		c.execute('SELECT * from inventory WHERE volser= ?' , (volser,))
 		data=c.fetchone()
 		
 		if data !=None and len(data)>0:
@@ -88,12 +92,13 @@ class tapeInfo():
 			self.tapeName.set_text(data[0])
 			self.rackName.set_text(data[2])
 			self.slotNumber.set_text(str(data[3]))
+			self.tapesList.append(self.barcode)
 
 		self.window.show()
 
 	def scan(self,button):
 		# this method will append the barcode to the list and send the list back to ScanTape Interface
-		self.tapesList.append(self.barcode)
+		
 		self.window.destroy()
 		self.window=ScanTape.ScanTape(self.tapesList,self.Username,self.userType)
 		
@@ -108,7 +113,11 @@ class tapeInfo():
 	
 	def cancel(self,button): #Go to ScanTape interface with the TapeList with no further changes
 		self.window.destroy()
-		self.window=ScanTape.ScanTape(self.tapesList,self.userType)
+		index = len(self.tapesList)
+		print self.tapesList
+		del self.tapesList[index - 1]
+		print self.tapesList
+		self.window=ScanTape.ScanTape(self.tapesList,self.Username,self.userType)
 
 		
 # put thim coment chang the window in the first class to window1

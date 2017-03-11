@@ -34,12 +34,13 @@
             <property name="valign">center</property>
             <child>
               <object class="GtkButton" id="Scan">
-                <property name="label" translatable="yes">Scan more</property>
+                <property name="label" translatable="yes">Next</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
+                <property name="relief">none</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
