@@ -6,17 +6,20 @@ import ManageUsersAccounts
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+
 class UserInfo():
 	builder =None
+	UN =None
 	def __init__(self,un):
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("UserInfoInterface.glade")
 		window = self.builder.get_object("window1")
 		# get the objects
 		username=self.builder.get_object("UN")
-		password=self.builder.get_object("Password")
+		email=self.builder.get_object("Email")
 		# sets the username in the field
 		username.set_text(un)
+		self.UN = un
 		
 		# connect the buttons and make their event listener
 		EditBtn=self.builder.get_object("Edit")
@@ -29,15 +32,15 @@ class UserInfo():
 		#show
 		window.show()
 		
-		#get the password for the username + display it
+		#get the email for the username + display it
 		db = sqlite3.connect('SaedRobot.db')
 		c = db.cursor()
-		c.execute("SELECT password from users WHERE username=? ",(un,))
-		getPass=c.fetchone()
-		print getPass[0]
-		if getPass != None:
-			password.set_text(getPass[0])
-		else: # if no password was there alert with warning message 
+		c.execute("SELECT email from users WHERE username=? ",(self.UN,))
+		getEmail=c.fetchone()
+		print getEmail[0]
+		if getEmail != None:
+			email.set_text(getEmail[0])
+		else: # if no email was there alert with warning message 
 			dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Something wrong .. Try Again")
 			dialog.run()
 			dialog.close()
@@ -45,7 +48,7 @@ class UserInfo():
 		
 	def Edit(self,button):
 		#move to UpdateUserInterface and pass the username
-		window2 = updateUserInterface.UpdateUser(un)
+		window2 = updateUserInterface.UpdateUser(self.UN)
 		window2.show()
 	def Delete(self,button): # I think its not working!
 		
@@ -54,11 +57,10 @@ class UserInfo():
 		respond=dialog.run()
 		if respond == Gtk.ResponseType.YES:
 			print "Yes"
-			username=self.builder.get_object("UN") ## get the username
 			# connect to the DB + perform the query
 			db = sqlite3.connect('SaedRobot.db')
 			c = db.cursor()
-			c.execute("DELETE FROM users WHERE username=?", (username.get_text(),))
+			c.execute("DELETE FROM users WHERE username=?", (self.UN,))
 			db.commit()
 			
 			#should give a proper message or a pop up window as confirmation
