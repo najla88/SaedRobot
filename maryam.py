@@ -7,7 +7,7 @@ from gi.repository import Gtk
 import login
 import changePass
 import ScanTape
-
+#import ChooseDestination
 class userHome():
 	
 	builder =None
@@ -61,6 +61,7 @@ class tapeInfo():
 		self.userType=kind
 		self.Username=username
 		scanBtn=self.builder.get_object("scanBtn")
+		
 		proceedBtn=self.builder.get_object("proceedBtn")
 		cancelBtn=self.builder.get_object("cancelBtn")
 		self.projectName=self.builder.get_object("projectName")
@@ -71,6 +72,7 @@ class tapeInfo():
 		scanBtn.connect("clicked",self.scan)
 		proceedBtn.connect("clicked",self.proceed)
 		cancelBtn.connect("clicked",self.cancel)
+		
 		
 		self.tapesList= tl
 		self.barcode = volser
@@ -105,7 +107,7 @@ class tapeInfo():
 		
 	def proceed(self,button):
 		self.window.destroy() # Go ahead to next interface with the tapelist >> Zainab's interface Choose distnation
-		#self.window=scaneMore()
+		#self.window=ChooseDestination.ChooseDes()
 		###########################################
 		#here is zainab ++++++paaaaas theee usertyyyyyyype
 		######################################################
@@ -118,6 +120,10 @@ class tapeInfo():
 		del self.tapesList[index - 1]
 		print self.tapesList
 		self.window=ScanTape.ScanTape(self.tapesList,self.Username,self.userType)
+		
+	
+			
+			
 
 		
 # put thim coment chang the window in the first class to window1
