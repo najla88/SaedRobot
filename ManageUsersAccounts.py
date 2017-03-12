@@ -4,10 +4,7 @@ import json
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import updateUserInterface
-con = sqlite3.connect('SaedRobot.db', timeout=4000)
-cur = con.cursor()
-cur.execute("SELECT USERNAME, EMAIL from users")
-software_list = cur.fetchall()
+
 		
 class ManageUsersAccounts():
 
@@ -29,7 +26,10 @@ class ManageUsersAccounts():
 	self.editBtn=self.builder.get_object("editBtn")
 	self.deleteBtn=self.builder.get_object("deleteBtn")
 	addBtn.connect("clicked",self.onAddUserButtonPressed)
-	
+	con = sqlite3.connect('SaedRobot.db', timeout=4000)
+	cur = con.cursor()
+	cur.execute("SELECT USERNAME, EMAIL from users")
+	software_list = cur.fetchall()
 	#backBtn=self.builder.get_object("backBtn")		
 	#backBtn.connect("clicked",self.onBackToMainAdminMenuButtonPressed)
 
@@ -139,5 +139,5 @@ class ManageUsersAccounts():
 	    tree_iter = model.get_iter(path)
             value = model.get_value(tree_iter,0)
 
-window = ManageUsersAccounts()
-Gtk.main()
+#window = ManageUsersAccounts()
+#Gtk.main()

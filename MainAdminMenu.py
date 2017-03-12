@@ -3,6 +3,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk 
 import ScanTape
 import ManageRacks
+import ManageUsersAccounts
 
 class MainAdminMenu():
 	
@@ -29,7 +30,7 @@ class MainAdminMenu():
         	self.window=ScanTape.ScanTape(list(), self.Username	,self.userType)
         
     	def onManageUsersAccountsButtonPressed(self, button):
-        	import ManageUsersAccounts
+        	
         	self.window.destroy()
         	self.window=ManageUsersAccounts.ManageUsersAccounts()
 
@@ -37,5 +38,4 @@ class MainAdminMenu():
         	self.window.destroy()
         	self.window=ManageRacks.ManageRack()
         	
-#window=MainAdminMenu()
-#Gtk.main()
+

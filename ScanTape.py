@@ -4,6 +4,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import maryam
+import MainAdminMenu
 
 class ScanTape():
 	builder =None
@@ -12,10 +13,14 @@ class ScanTape():
 	tapesList = None
 	userType = None
 	Username=None
+	checkBarcode = None
+	
 	def __init__(self, tl,username,kind ):
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("ScanMoreInterface.glade")
 		self.window = self.builder.get_object("window1")
+		backBtn=self.builder.get_object("backBtn")
+		backBtn.connect("clicked",self.back)
 		#######################################################
 		self.userType=kind
 		self.Username= username
@@ -41,20 +46,20 @@ class ScanTape():
 			c = db.cursor()
 			#check if the barcode belongs to the database
 			c.execute("SELECT * from inventory WHERE volser=?",(barcode,))
-			checkBarcode=c.fetchone()
+			self.checkBarcode=c.fetchone()
 	
-			if checkBarcode != None:
+			if self.checkBarcode != None:
 				#move to tapes info with the specific barcode
-				if checkBarcode[0] in self.tapesList :
+				if self.checkBarcode[0] in self.tapesList :
 					dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"You have already scanned this tap")
 					dialog.run()
 					dialog.close()
 					self.barcode1.set_text("")
 					
 				else :
-					print checkBarcode[0]
+					print self.checkBarcode[0]
 					self.window.destroy()
-					self.window =maryam.tapeInfo(checkBarcode[0] , self.tapesList,self.Username,self.userType)
+					self.window =maryam.tapeInfo(self.checkBarcode[0] , self.tapesList,self.Username,self.userType)
 			else:
 				 # if Barcode is not in the DB alert with warning message 
 				dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Scanned barcode does not belong to our database .. try another one")
@@ -67,6 +72,33 @@ class ScanTape():
 			dialog.run()
 			dialog.close()
 			print "Warning dialog closed"
+			
+	def back(self,button):
+		
+		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"Do you want to cancel this task?")
+		respond=dialog.run()
+		if respond == Gtk.ResponseType.YES:
+			print "Yes"
+			if (self.userType==1):
+				self.window.destroy()
+				del self.tapesList[:]
+				self.window=MainAdminMenu.MainAdminMenu(self.Username,self.userType)
+				#self.window=MainAdminMenu.MainAdminMenu()
+				dialog.close()
+			else:
+				self.window.destroy()
+				del self.tapesList[:]
+				self.window=maryam.userHome(self.Username,self.userType)
+				print self.tapesList
+				dialog.close()
+
+		elif respond == Gtk.ResponseType.NO:
+			print "No"
+			dialog.close()
+			
+				
+			
+			
 
 
 
