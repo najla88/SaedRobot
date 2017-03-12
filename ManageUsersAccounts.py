@@ -4,7 +4,7 @@ import json
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import updateUserInterface
-
+import login
 		
 class ManageUsersAccounts():
 
@@ -16,8 +16,11 @@ class ManageUsersAccounts():
     editButton = None
     software_liststore = None
     grid = None
-    
-    def __init__(self):
+    MyUsername = None
+    userType = None
+    def __init__(self, Username, kind):
+	self.MyUsername = Username
+	self.userType = kind
 	self.builder = Gtk.Builder()
 	self.builder.add_from_file("Saed.glade")
 	self.window = self.builder.get_object("window2")	
@@ -25,13 +28,18 @@ class ManageUsersAccounts():
 	addBtn=self.builder.get_object("addBtn")
 	self.editBtn=self.builder.get_object("editBtn")
 	self.deleteBtn=self.builder.get_object("deleteBtn")
+	logoutBtn=self.builder.get_object("logoutBtn2")
 	addBtn.connect("clicked",self.onAddUserButtonPressed)
 	con = sqlite3.connect('SaedRobot.db', timeout=4000)
 	cur = con.cursor()
 	cur.execute("SELECT USERNAME, EMAIL from users")
 	software_list = cur.fetchall()
-	#backBtn=self.builder.get_object("backBtn")		
-	#backBtn.connect("clicked",self.onBackToMainAdminMenuButtonPressed)
+	logoutBtn.connect("clicked",self.onLogoutButtonPressed)
+	backbox=self.builder.get_object("backbox2")
+	backbox.connect("button-release-event",self.onBackToMainAdminMenuButtonPressed)
+	image=self.builder.get_object("image2")
+	image.set_visible(1)
+	backbox.set_sensitive(1)
 
         #Creating the ListStore model
         self.software_liststore = Gtk.ListStore(str,str)
@@ -74,7 +82,7 @@ class ManageUsersAccounts():
     def onAddUserButtonPressed(self, button):
         import AddNewUser
         self.window.destroy()
-        self.window=AddNewUser.AddNewUser()
+        self.window=AddNewUser.AddNewUser(self.MyUsername,self.userType)
 
     def onEditButtonPressed(self, button, selection):
 		model,list_iter = selection.get_selected () 
@@ -126,10 +134,10 @@ class ManageUsersAccounts():
             
         	dialog.close()
                
-    def onBackToMainAdminMenuButtonPressed(self, button):
+    def onBackToMainAdminMenuButtonPressed(self, button, a):
 	import MainAdminMenu
         self.window.destroy()
-        self.window=MainAdminMenu.MainAdminMenu()
+        self.window=MainAdminMenu.MainAdminMenu(self.MyUsername,self.userType)
 
     def onSelectionChanged(self, tree_selection) :
 	(model, pathlist) = tree_selection.get_selected_rows()
@@ -139,5 +147,6 @@ class ManageUsersAccounts():
 	    tree_iter = model.get_iter(path)
             value = model.get_value(tree_iter,0)
 
-#window = ManageUsersAccounts()
-#Gtk.main()
+    def onLogoutButtonPressed(self, button):
+	self.window.destroy()
+	self.window=login.loginClass()   

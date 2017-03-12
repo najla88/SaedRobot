@@ -6,6 +6,7 @@ import string
 import sqlite3
 from validate_email import validate_email
 import re
+import login
 		
 class AddNewUser():
 
@@ -14,18 +15,26 @@ class AddNewUser():
     box = None
     username = None
     email = None
+    MyUsername = None
+    userType=None
     
-    def __init__(self):
+    def __init__(self, Username, kind):
+	self.MyUsername = Username
+	self.userType=kind
 	self.builder = Gtk.Builder()
 	self.builder.add_from_file("Saed.glade")
 	self.window = self.builder.get_object("window3")
 	self.username = self.builder.get_object("username")
         self.email = self.builder.get_object("email")	
 	addBtn=self.builder.get_object("addBtn1")
-	backBtn=self.builder.get_object("backBtn1")	
+	logoutBtn=self.builder.get_object("logoutBtn3")
 	addBtn.connect("clicked",self.onAddNewUserButtonPressed)
-	backBtn.connect("clicked",self.onBackToManageUsersButtonPressed)
-	
+	logoutBtn.connect("clicked",self.onLogoutButtonPressed)
+	backbox=self.builder.get_object("backbox3")
+	backbox.connect("button-release-event",self.onBackToManageUsersButtonPressed)
+	image=self.builder.get_object("image3")
+	image.set_visible(1)
+	backbox.set_sensitive(1)
         self.window.show_all()
 
 
@@ -81,11 +90,14 @@ class AddNewUser():
 			 dialog.run()
 			 dialog.close()
 			 
-    def onBackToManageUsersButtonPressed(self, button):
+    def onBackToManageUsersButtonPressed(self, button, a):
         import ManageUsersAccounts
         self.window.destroy()
-        self.window=ManageUsersAccounts.ManageUsersAccounts()
+        self.window=ManageUsersAccounts.ManageUsersAccounts(self.MyUsername, self.userType)
 
-        
+    def onLogoutButtonPressed(self, button):
+		self.window.destroy()
+		self.window=login.loginClass()  
+		        
 #window = AddNewUser()
 #Gtk.main()
