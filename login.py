@@ -51,6 +51,9 @@ class loginClass():
 		GtkBox#logoMenu{
 		background: #ffffff;
 		}
+		GtkLabel{
+		font: sans-serif;
+		}
 		
 		GtkEntry {
 		
@@ -59,12 +62,12 @@ class loginClass():
 		background: #fff;
 		border: 1px solid #ccc;
 		color: #555;
-		font: Arial, Helvetica, sans-serif;
+		font: sans-serif;
 		padding-top:10px;
-		padding-bottom:10px;
+		padding-bottom:15px;
 
 		border-radius: 1px;
-
+		margin-bottom:150px;
 		
 		
 		}
@@ -83,6 +86,8 @@ class loginClass():
 		padding: 15px 15px 15px 15px;
 		border: none;
 		color: #fff;
+		font: sans-serif;
+
 		}
 		
 		GtkButton:active,GtkButton:hover  {
@@ -122,7 +127,6 @@ class loginClass():
 		
 		username = self.builder.get_object("username")
 		password = self.builder.get_object("password")
-		loginError = self.builder.get_object("loginError")
 
 		db = sqlite3.connect('SaedRobot.db')
 		c = db.cursor()
@@ -132,7 +136,6 @@ class loginClass():
 		if data != None and len(data)>0:
 		
 			print "Welcome"
-			loginError.set_text('')
 			self.window.destroy()
 			if data[3]==0:
 				self.window=maryam.userHome(data[0],data[3])
