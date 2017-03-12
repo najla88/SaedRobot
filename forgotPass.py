@@ -16,15 +16,30 @@ class forgot():
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("Loin.glade")
 		self.window = self.builder.get_object("window2")
-		backBtn=self.builder.get_object("backBtn")
+		#backBtn=self.builder.get_object("backBtn")
 		resetBtn=self.builder.get_object("resetBtn")
-		backBtn.connect("clicked",self.back)
+		#backBtn.connect("clicked",self.back)
 		resetBtn.connect("clicked",self.reset)
+
+
+		backbox=self.builder.get_object("backbox1")
+		logout=self.builder.get_object("logout1")
+		logout.set_label('')
+		#logout.connect("button-release-event",self.logout)
+		backbox.connect("button-release-event",self.back)
+		image=self.builder.get_object("image1")
+		image.set_visible(1)
+		backbox.set_sensitive(1)
+		logout.set_sensitive(0)
+		
+		
+
+
 
 		self.window.show()
 
 
-	def back(self,button):
+	def back(self,button,a):
 		self.window.destroy()
 		self.window=login.loginClass()
 	

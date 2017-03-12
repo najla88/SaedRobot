@@ -38,7 +38,7 @@ class userHome():
 			
 	def changePassword(self,button):
 		self.window.destroy()
-		window2 = changePass.change_password(self.Username)
+		window2 = changePass.change_password(self.Username,self.userType)
 		
 class tapeInfo():
 	

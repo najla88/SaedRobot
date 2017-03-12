@@ -5,6 +5,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk,Gdk
 import maryam
+import login
 
 
 class change_password():
@@ -15,24 +16,37 @@ class change_password():
 	newPassEntry = None
 	conPassEntry = None
 	Username=None
+	userType=None
 	
-	def __init__(self,username):
+	def __init__(self,username,kind):
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("Loin.glade")
 		self.window = self.builder.get_object("window3")
 		self.Username=username
 		clearBtn=self.builder.get_object("clearBtn")
 		changeBtn =self.builder.get_object("changeBtn")
-		backBtn = self.builder.get_object("backBtn2")
 		
 		self.oldPassEntry =self.builder.get_object("oldPass")
 		self.newPassEntry =self.builder.get_object("newPass")
 		self.conPassEntry =self.builder.get_object("conPass")
-		
+		self.userType=kind
 		
 		clearBtn.connect("clicked",self.clear)
 		changeBtn.connect("clicked",self.change)
-		backBtn.connect("clicked",self.back)
+		
+		
+		
+		backbox=self.builder.get_object("backbox2")
+		logout=self.builder.get_object("logout2")
+		logout.set_label('Log Out')
+		logout.connect("button-release-event",self.logout)
+		backbox.connect("button-release-event",self.back)
+		image=self.builder.get_object("image1")
+		image.set_visible(1)
+		backbox.set_sensitive(1)
+		logout.set_sensitive(1)
+		
+		
 		self.window.show()
 
 
@@ -90,7 +104,12 @@ class change_password():
 						self.back(button)
 		
 		
-	def back(self,button):
+	def back(self, button,a):
 		print 'hhhhhh'
 		self.window.destroy()
-		self.window=maryam.userHome()
+		self.window=maryam.userHome(self.Username, self.userType)
+		
+	def logout(self,button, a):
+		print 'hhhhhh'
+		self.window.destroy()
+		self.window=login.loginClass()	
