@@ -86,7 +86,7 @@ class ChooseDes():
 	
 
 	def Go(self,button, s):
-			self.list_tapes = list()
+			#self.list_tapes = lt
 			#self.list_tapes.append("C00001")
 			#self.list_tapes.append("C00002")
 			#self.list_tapes.append("C00003")
