@@ -140,9 +140,7 @@ class AddRack():
 			value = model.get_value(tree_iter,0)
 			print value
 			self.Add1Btn.set_sensitive(True)
-			
-
-    def onLogoutButtonPressedButtonPressed(self, button):
+	def onLogoutButtonPressedButtonPressed(self, button):
 		self.window.destroy()
 		self.window=login.loginClass() 
 			
