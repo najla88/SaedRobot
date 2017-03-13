@@ -11,6 +11,7 @@ import login
 
 
 
+
 class ChooseDes():
 	
 	builder =None
@@ -28,8 +29,8 @@ class ChooseDes():
 	list_tapes=None
 	
 	
-	#def __init__(self, tl,username,kind):
-	def __init__(self):
+	def __init__(self, tl,username,kind):
+	#def __init__(self):
 		db = sqlite3.connect('SaedRobot.db')
 		cur = db.cursor()
 		cur.execute("SELECT RACKNAME from movement where STATE=1")
@@ -43,9 +44,11 @@ class ChooseDes():
 		backBtn=self.builder.get_object("backBtn")
 		backBtn.connect("clicked",self.back)
 		self.GoBtn.set_sensitive(False)
-		#self.list_tapes=tl
-		#self.userType=kind
-		#self.Username= username
+		logoutBtn=self.builder.get_object("logoutBtn1")
+		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)
+		self.list_tapes=tl
+		self.userType=kind
+		self.Username= username
 
 	        #Creating the ListStore model
         	self.software_liststore = Gtk.ListStore(str)
@@ -81,9 +84,9 @@ class ChooseDes():
 
 	def Go(self,button, s):
 			self.list_tapes = list()
-			self.list_tapes.append("C00001")
-			self.list_tapes.append("C00002")
-			self.list_tapes.append("C00003")
+			#self.list_tapes.append("C00001")
+			#self.list_tapes.append("C00002")
+			#self.list_tapes.append("C00003")
 			index=len(self.list_tapes)
 			print index
 			model,list_iter = s.get_selected () 
@@ -181,7 +184,7 @@ class ChooseDes():
 
 	
 
-window=ChooseDes()
-Gtk.main()
-
+    def onLogoutButtonPressedButtonPressed(self, button):
+		self.window.destroy()
+		self.window=login.loginClass() 
 
