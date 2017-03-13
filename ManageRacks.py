@@ -3,7 +3,9 @@ import gi
 import json
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+import MainAdminMenu
 import AddRacks
+import login
 
 
 
@@ -19,9 +21,10 @@ class ManageRack():
 	software_liststore = None
 	current_filter_language = None
 	language_filter = None
+	userType= None
+	Username= None
 	
-	
-	def __init__(self):
+	def __init__(self, username, kind):
 		db = sqlite3.connect('SaedRobot.db')
 		cur = db.cursor()
 		cur.execute("SELECT RACKNAME from movement where STATE=1")
@@ -34,11 +37,14 @@ class ManageRack():
 		AddBtn=self.builder.get_object("AddBtn")
 		self.DelBtn=self.builder.get_object("DelBtn")
 		backBtn=self.builder.get_object("backBtn")
+		logoutBtn=self.builder.get_object("logoutBtn1")
+		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)
 		
 		AddBtn.connect("clicked",self.Add)
 		backBtn.connect("clicked",self.back)
 		self.DelBtn.set_sensitive(False)
-
+		self.userType=kind
+		self.Username=username
 	        #Creating the ListStore model
         	self.software_liststore = Gtk.ListStore(str)
         	for software_ref in list1:
@@ -71,7 +77,7 @@ class ManageRack():
 
 	def Add(self,button):
 		self.window.destroy()
-		self.window=AddRacks.AddRack()
+		self.window=AddRacks.AddRack(self.Username, self.userType)
 
 	def Del(self,button, s):
 		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"Are you sure, You want to delete this rack?")
@@ -128,8 +134,7 @@ class ManageRack():
 				dialog.close()
 	def back(self,button):
 		self.window.destroy()
-
-		#self.window=login()
+		self.window=MainAdminMenu.MainAdminMenu(self.Username, self.userType)
 		
 	def onSelectionChanged(self, tree_selection) :
 		(model, pathlist) = tree_selection.get_selected_rows()
@@ -165,7 +170,9 @@ class ManageRack():
         	self.scrollable_treelist.add(self.treeview)		
 
 
-
+    	def onLogoutButtonPressedButtonPressed(self, button):
+			self.window.destroy()
+			self.window=login.loginClass() 
 		
 
 
