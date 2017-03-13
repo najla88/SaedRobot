@@ -13,12 +13,65 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkImage" id="image">
-            <property name="width_request">600</property>
-            <property name="height_request">300</property>
+          <object class="GtkBox" id="box4">
+            <property name="name">logoMenu</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="pixbuf">scanImage.gif</property>
+            <property name="homogeneous">True</property>
+            <child>
+              <object class="GtkEventBox" id="backbox2">
+                <property name="name">backbox</property>
+                <property name="width_request">30</property>
+                <property name="height_request">50</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="valign">start</property>
+                <child>
+                  <object class="GtkImage" id="image2">
+                    <property name="height_request">30</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="hexpand">True</property>
+                    <property name="pixbuf">back.png</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkImage" id="image1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">center</property>
+                <property name="hexpand">True</property>
+                <property name="pixbuf">logo.png</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="logoutBtn1">
+                <property name="label" translatable="yes">Log Out</property>
+                <property name="name">logout</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -27,13 +80,12 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry" id="barcode">
-            <property name="width_request">460</property>
+          <object class="GtkImage" id="image">
+            <property name="width_request">150</property>
+            <property name="height_request">200</property>
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="is_focus">True</property>
-            <property name="halign">center</property>
-            <property name="margin_bottom">15</property>
+            <property name="can_focus">False</property>
+            <property name="pixbuf">scanImage.gif</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -42,48 +94,33 @@
           </packing>
         </child>
         <child>
-          <object class="GtkGrid" id="grid1">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
-            <child>
-              <object class="GtkButton" id="Scan">
-                <property name="label" translatable="yes">Next</property>
-                <property name="width_request">460</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="halign">center</property>
-                <property name="valign">center</property>
-                <property name="margin_bottom">15</property>
-                <property name="relief">none</property>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">0</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton" id="backBtn">
-            <property name="label" translatable="yes">back</property>
+          <object class="GtkEntry" id="barcode">
             <property name="width_request">460</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
             <property name="halign">center</property>
+            <property name="margin_bottom">15</property>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="Scan">
+            <property name="label" translatable="yes">Next</property>
+            <property name="width_request">460</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="halign">center</property>
+            <property name="margin_bottom">15</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </object>

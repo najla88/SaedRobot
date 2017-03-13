@@ -38,7 +38,7 @@ class MainAdminMenu():
 
     	def onManageRacksButtonPressed(self, button):
         	self.window.destroy()
-        	self.window=ManageRacks.ManageRack()
+        	self.window=ManageRacks.ManageRack(self.Username, self.userType)
 
     	def onLogoutButtonPressedButtonPressed(self, button):
 			self.window.destroy()

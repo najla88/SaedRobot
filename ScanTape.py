@@ -1,10 +1,11 @@
-#written by : Arwa AlKhunine, CS, Imam Abdulrahman AlFaisal University
+#written by : Arwa AlKhunine, Maryam Al-Abdullatif, CS, Imam Abdulrahman AlFaisal University
 import sqlite3
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import maryam
 import MainAdminMenu
+import login
 
 class ScanTape():
 	builder =None
@@ -19,12 +20,26 @@ class ScanTape():
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("ScanMoreInterface.glade")
 		self.window = self.builder.get_object("window1")
-		backBtn=self.builder.get_object("backBtn")
-		backBtn.connect("clicked",self.back)
+		#backBtn=self.builder.get_object("backBtn")
+		#backBtn.connect("clicked",self.back)
 		#######################################################
 		self.userType=kind
 		self.Username= username
 		########################################################
+		logoutBtn=self.builder.get_object("logoutBtn1")
+		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)	
+		
+		
+		
+		backbox=self.builder.get_object("backbox2")
+		backbox.connect("button-release-event",self.back)
+		image=self.builder.get_object("image1")
+		image.set_visible(1)
+		backbox.set_sensitive(1)
+		
+		
+		
+		
 		
 		
 		# connect the buttons and make their event listener
@@ -65,6 +80,7 @@ class ScanTape():
 				dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Scanned barcode does not belong to our database .. try another one")
 				dialog.run()
 				dialog.close()
+				self.barcode1.set_text("")
 				print "Warning dialog closed"
 		else:
 			 # if no Barcode was there alert with warning message 
@@ -73,7 +89,7 @@ class ScanTape():
 			dialog.close()
 			print "Warning dialog closed"
 			
-	def back(self,button):
+	def back(self,button,a):
 		
 		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"Do you want to cancel this task?")
 		respond=dialog.run()
@@ -95,6 +111,10 @@ class ScanTape():
 		elif respond == Gtk.ResponseType.NO:
 			print "No"
 			dialog.close()
+	def onLogoutButtonPressedButtonPressed(self, button):
+			self.window.destroy()
+			self.window=login.loginClass()       	
+
 			
 				
 			

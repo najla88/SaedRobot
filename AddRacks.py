@@ -4,6 +4,7 @@ import json
 import ManageRacks
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+import login
 
 
 class AddRack():
@@ -18,10 +19,12 @@ class AddRack():
 	software_liststore = None
 	current_filter_language = None
 	language_filter = None
+	userType= None
+	Username= None
 	
 	
 	
-	def __init__(self):
+	def __init__(self, username, kind):
 		
 		dbA = sqlite3.connect('SaedRobot.db')
 		curA = dbA.cursor()
@@ -33,9 +36,14 @@ class AddRack():
 		self.grid=self.builder.get_object("grid6")
 		self.window = self.builder.get_object("window2")
 		self.Add1Btn=self.builder.get_object("Add1Btn")
-		back1Btn=self.builder.get_object("back1Btn")
-		back1Btn.connect("clicked",self.back1)
-		
+		#back1Btn=self.builder.get_object("back1Btn")
+		#back1Btn.connect("clicked",self.back1)
+		backbox=self.builder.get_object("back1Btn")
+		backbox.connect("button-release-event",self.back1)
+		self.userType=kind
+		self.Username=username
+		logoutBtn=self.builder.get_object("logoutBtn2")
+		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)
 		
 	        #Creating the ListStore model
         	self.software_liststore = Gtk.ListStore(str)
@@ -73,9 +81,9 @@ class AddRack():
 
 
 
-	def back1(self,button):
+	def back1(self,button,a):
 		self.window.destroy()
-		self.window=ManageRacks.ManageRack()
+		self.window=ManageRacks.ManageRack(self.Username, self.userType)
 
 	def Add1(self,button,s):
 		#self.window.destroy()
@@ -134,5 +142,9 @@ class AddRack():
 			value = model.get_value(tree_iter,0)
 			print value
 			self.Add1Btn.set_sensitive(True)
+			
+	def onLogoutButtonPressedButtonPressed(self, button):
+		self.window.destroy()
+		self.window=login.loginClass() 
 			
 	
