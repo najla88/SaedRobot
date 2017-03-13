@@ -25,6 +25,8 @@ class userHome():
 		changePasswordBtn=self.builder.get_object("changePasswordBtn")
 		createTaskBtn.connect("clicked",self.createTask)
 		changePasswordBtn.connect("clicked",self.changePassword)
+		logoutBtn=self.builder.get_object("logoutBtn1")
+		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)	
   
 		self.window.show()
 		
@@ -39,6 +41,11 @@ class userHome():
 	def changePassword(self,button):
 		self.window.destroy()
 		window2 = changePass.change_password(self.Username,self.userType)
+		
+	def onLogoutButtonPressedButtonPressed(self, button):
+			self.window.destroy()
+			self.window=login.loginClass()       	
+ 
 		
 class tapeInfo():
 	
@@ -61,7 +68,8 @@ class tapeInfo():
 		self.userType=kind
 		self.Username=username
 		scanBtn=self.builder.get_object("scanBtn")
-		
+		logoutBtn=self.builder.get_object("logoutBtn2")
+		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)	
 		proceedBtn=self.builder.get_object("proceedBtn")
 		cancelBtn=self.builder.get_object("cancelBtn")
 		self.projectName=self.builder.get_object("projectName")
@@ -107,7 +115,7 @@ class tapeInfo():
 		
 	def proceed(self,button):
 		self.window.destroy() # Go ahead to next interface with the tapelist >> Zainab's interface Choose distnation
-		#self.window=ChooseDestination.ChooseDes()
+		self.window=ChooseDestination.ChooseDes(self.tapesList,self.Username,self.userType)
 		###########################################
 		#here is zainab ++++++paaaaas theee usertyyyyyyype
 		######################################################
@@ -122,8 +130,10 @@ class tapeInfo():
 		self.window=ScanTape.ScanTape(self.tapesList,self.Username,self.userType)
 		
 	
-			
-			
+	def onLogoutButtonPressedButtonPressed(self, button):
+			self.window.destroy()
+			self.window=login.loginClass()       	
+		
 
 		
 # put thim coment chang the window in the first class to window1
