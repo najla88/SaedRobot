@@ -36,12 +36,15 @@ class ManageRack():
 		self.grid=self.builder.get_object("grid3")
 		AddBtn=self.builder.get_object("AddBtn")
 		self.DelBtn=self.builder.get_object("DelBtn")
-		backBtn=self.builder.get_object("backBtn")
-		logoutBtn=self.builder.get_object("logoutBtn1")
+		#backBtn=self.builder.get_object("backBtn")
+		logoutBtn=self.builder.get_object("logoutBtn")
 		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)
+		backbox=self.builder.get_object("backBtn")
+		backbox.connect("button-release-event",self.back)
+		
 		
 		AddBtn.connect("clicked",self.Add)
-		backBtn.connect("clicked",self.back)
+		#backBtn.connect("clicked",self.back)
 		self.DelBtn.set_sensitive(False)
 		self.userType=kind
 		self.Username=username
@@ -132,7 +135,7 @@ class ManageRack():
 		else: 
 			
 				dialog.close()
-	def back(self,button):
+	def back(self,button,a):
 		self.window.destroy()
 		self.window=MainAdminMenu.MainAdminMenu(self.Username, self.userType)
 		
@@ -143,36 +146,10 @@ class ManageRack():
 			value = model.get_value(tree_iter,0)
 			print value
 			self.DelBtn.set_sensitive(True)
-
-	def fillTable():		
-	        #Creating the ListStore model
-        	self.software_liststore = Gtk.ListStore(str)
-        	for software_ref in list1:
-                    self.software_liststore.append(list(software_ref))
-        	self.current_filter_language = None
-
-        	#Creating the filter, feeding it with the liststore model
-        	self.language_filter = self.software_liststore.filter_new()
-
-
-        	#creating the treeview, making it use the filter as a model, and adding the columns
-        	self.treeview = Gtk.TreeView.new_with_model(self.language_filter)
-        	for i, column_title in enumerate(["Rack Name"]):
-                    renderer = Gtk.CellRendererText()
-                    column = Gtk.TreeViewColumn(column_title, renderer, text=i)
-                    self.treeview.append_column(column)
-
-        	#setting up the layout, putting the treeview in a scrollwindow
-        	self.scrollable_treelist = Gtk.ScrolledWindow()
-        	self.scrollable_treelist.set_vexpand(True)
-        	self.scrollable_treelist.set_hexpand(True)
-        	self.grid.attach(self.scrollable_treelist, 0, 0, 1, 1)
-        	self.scrollable_treelist.add(self.treeview)		
-
-
-    	def onLogoutButtonPressedButtonPressed(self, button):
-			self.window.destroy()
-			self.window=login.loginClass() 
+	
+	def onLogoutButtonPressedButtonPressed(self, button):
+		self.window.destroy()
+		self.window=login.loginClass() 
 		
 
 

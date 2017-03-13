@@ -36,8 +36,10 @@ class AddRack():
 		self.grid=self.builder.get_object("grid6")
 		self.window = self.builder.get_object("window2")
 		self.Add1Btn=self.builder.get_object("Add1Btn")
-		back1Btn=self.builder.get_object("back1Btn")
-		back1Btn.connect("clicked",self.back1)
+		#back1Btn=self.builder.get_object("back1Btn")
+		#back1Btn.connect("clicked",self.back1)
+		backbox=self.builder.get_object("back1Btn")
+		backbox.connect("button-release-event",self.back1)
 		self.userType=kind
 		self.Username=username
 		logoutBtn=self.builder.get_object("logoutBtn1")
@@ -79,7 +81,7 @@ class AddRack():
 
 
 
-	def back1(self,button):
+	def back1(self,button,a):
 		self.window.destroy()
 		self.window=ManageRacks.ManageRack(self.Username, self.userType)
 

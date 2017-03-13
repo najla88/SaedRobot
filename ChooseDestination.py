@@ -41,14 +41,16 @@ class ChooseDes():
 		self.window = self.builder.get_object("window1")
 		self.grid=self.builder.get_object("grid3")
 		self.GoBtn=self.builder.get_object("GoBtn")
-		backBtn=self.builder.get_object("backBtn")
-		backBtn.connect("clicked",self.back)
+		#backBtn=self.builder.get_object("backBtn")
+		#backBtn.connect("clicked",self.back)
 		self.GoBtn.set_sensitive(False)
 		logoutBtn=self.builder.get_object("logoutBtn1")
 		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)
 		self.list_tapes=tl
 		self.userType=kind
 		self.Username= username
+		backbox=self.builder.get_object("backBtn")
+		backbox.connect("button-release-event",self.back)
 
 	        #Creating the ListStore model
         	self.software_liststore = Gtk.ListStore(str)
@@ -144,7 +146,7 @@ class ChooseDes():
 			self.window.destroy()
 			self.window=login.login()
 			
-	def back(self,button):
+	def back(self,button,a):
 		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"Do you want to cancel this task?")
 		respond=dialog.run()
 		if respond == Gtk.ResponseType.YES:
@@ -183,8 +185,7 @@ class ChooseDes():
 			self.GoBtn.set_sensitive(True)
 
 	
-
-    def onLogoutButtonPressedButtonPressed(self, button):
+	def onLogoutButtonPressedButtonPressed(self, button):
 		self.window.destroy()
 		self.window=login.loginClass() 
 
