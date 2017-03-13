@@ -42,7 +42,7 @@ class AddRack():
 		backbox.connect("button-release-event",self.back1)
 		self.userType=kind
 		self.Username=username
-		logoutBtn=self.builder.get_object("logoutBtn1")
+		logoutBtn=self.builder.get_object("logoutBtn2")
 		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)
 		
 	        #Creating the ListStore model
@@ -142,6 +142,7 @@ class AddRack():
 			value = model.get_value(tree_iter,0)
 			print value
 			self.Add1Btn.set_sensitive(True)
+			
 	def onLogoutButtonPressedButtonPressed(self, button):
 		self.window.destroy()
 		self.window=login.loginClass() 

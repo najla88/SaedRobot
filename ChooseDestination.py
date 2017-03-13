@@ -6,6 +6,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import MainAdminMenu
 import login
+import maryam
 
 
 
@@ -153,15 +154,15 @@ class ChooseDes():
 			print "Yes"
 			if (self.userType==1):
 				self.window.destroy()
-				del self.tapesList[:]
+				del self.list_tapes[:]
 				self.window=MainAdminMenu.MainAdminMenu(self.Username,self.userType)
 				#self.window=MainAdminMenu.MainAdminMenu()
 				dialog.close()
 			else:
 				self.window.destroy()
-				del self.tapesList[:]
+				del self.list_tapes[:]
 				self.window=maryam.userHome(self.Username,self.userType)
-				print self.tapesList
+				print self.list_tapes
 				dialog.close()
 
 		elif respond == Gtk.ResponseType.NO:
