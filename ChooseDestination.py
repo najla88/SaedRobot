@@ -145,7 +145,7 @@ class ChooseDes():
 			
 			
 			self.window.destroy()
-			self.window=login.login()
+			self.window=login.loginClass()
 			
 	def back(self,button,a):
 		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"Do you want to cancel this task?")
