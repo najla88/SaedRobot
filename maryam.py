@@ -7,7 +7,7 @@ from gi.repository import Gtk
 import login
 import changePass
 import ScanTape
-#import ChooseDestination
+import ChooseDestination
 class userHome():
 	
 	builder =None
