@@ -13,7 +13,9 @@ class UpdateUser():
 	builder =None
 	UN=None
 	window=None
-	def __init__(self,un):
+	userType = None
+	MyUsername = None
+	def __init__(self,myUsername, kind, un):
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("UserInfoInterface.glade")
 		self.window = self.builder.get_object("window2")
@@ -24,7 +26,8 @@ class UpdateUser():
 		
 		username.set_text(un)
 		self.UN=un
-		
+		self.userType = kind
+		self.MyUsername = myUsername
 		# making event listeners "Clicked"
 		UpdateBtn=self.builder.get_object("Update")
 		UpdateBtn.connect("clicked",self.Update)
@@ -93,15 +96,13 @@ class UpdateUser():
 				
 				dialog.close()
 				self.window.destroy()
-				self.window = ManageUsersAccounts.ManageUsersAccounts()
-				self.window.show()
+				self.window = ManageUsersAccounts.ManageUsersAccounts(self.UN, self.userType)
 				
 			
 		# event listener for Back button
 	def back(self, button,a):
 		self.window.destroy()
-		self.window = ManageUsersAccounts.ManageUsersAccounts()
-		self.window.show()
+		self.window = ManageUsersAccounts.ManageUsersAccounts(self.UN, self.userType)
 		
 	def logout(self,button, a):
 		self.window.destroy()

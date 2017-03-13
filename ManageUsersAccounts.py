@@ -90,7 +90,7 @@ class ManageUsersAccounts():
 		if list_iter is not None:
 		   value = model[list_iter][0]
         	self.window.destroy()
-        	self.window=updateUserInterface.UpdateUser(value)
+        	self.window=updateUserInterface.UpdateUser(self.MyUsername,self.userType,value)
 
     def onDeleteButtonPressed(self,button, selection):
 		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.YES_NO, "Are you sure you want to delete this user?")

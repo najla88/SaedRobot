@@ -7,7 +7,8 @@ import sqlite3
 from validate_email import validate_email
 import re
 import login
-		
+import ManageUsersAccounts
+        		
 class AddNewUser():
 
     builder = None
@@ -91,7 +92,6 @@ class AddNewUser():
 			 dialog.close()
 			 
     def onBackToManageUsersButtonPressed(self, button, a):
-        import ManageUsersAccounts
         self.window.destroy()
         self.window=ManageUsersAccounts.ManageUsersAccounts(self.MyUsername, self.userType)
 
