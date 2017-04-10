@@ -42,8 +42,8 @@ class TreeViewFilterWindow(Gtk.Window):
         #setting up the layout, putting the treeview in a scrollwindow
         self.scrollable_treelist = Gtk.ScrolledWindow()
         self.scrollable_treelist.set_vexpand(True)
-        self.scrollable_treelist.set_hexpand(True)
-        box.attach(self.scrollable_treelist, 0, 0, 1, 1)
+        self.scrollable_treelist.set_hexpand(False)
+        box.attach(self.scrollable_treelist, 0,0,1,1)
         self.scrollable_treelist.add(self.treeview)
 
         self.window.show_all()
