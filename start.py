@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+# the application starts from here
 import sqlite3
 from common import id_generator,send_email
 import gi

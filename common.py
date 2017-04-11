@@ -1,15 +1,15 @@
-#!/usr/bin/env python
+#written by : Reem AlJunaid, Najla AlGhofaili CS, Imam Abdulrahman AlFaisal University
 import string
 import random
 import smtplib
 
 
-
+#password generator
 def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
     return(''.join(random.choice(chars) for _ in range(size)))
 
 
-
+#send email function
 def send_email(Password,Subject,Email):
 	server = smtplib.SMTP('smtp.gmail.com', 587)
 	server.ehlo()

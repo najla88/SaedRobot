@@ -15,7 +15,11 @@ class UpdateUser():
 	window=None
 	userType = None
 	MyUsername = None
+	
+	#starting function
 	def __init__(self,myUsername, kind, un):
+		
+		#connect to the desired window from glade file
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("UserInfoInterface.glade")
 		self.window = self.builder.get_object("window2")
@@ -23,7 +27,7 @@ class UpdateUser():
 		#assigning the values of the text fields to those variables (username+Email)
 		username=self.builder.get_object("UN1")
 		email=self.builder.get_object("Email1")
-		
+
 		username.set_text(un)
 		self.UN=un
 		self.userType = kind
@@ -31,7 +35,8 @@ class UpdateUser():
 		# making event listeners "Clicked"
 		UpdateBtn=self.builder.get_object("Update")
 		UpdateBtn.connect("clicked",self.Update)
-		
+
+			#bring all the objects
 		backbox=self.builder.get_object("backbox")
 		logout=self.builder.get_object("logout")
 		logout.set_label('Log Out')
@@ -54,6 +59,7 @@ class UpdateUser():
 			email.set_text(getEmail[0])
 		else: # if no Email was there alert with warning message 
 			dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK,"Something wrong .. Try Again")
+			dialog.set_title("Error message")
 			dialog.run()
 			dialog.close()
 			print "Warning dialog closed"
@@ -69,16 +75,19 @@ class UpdateUser():
 		if not validate_email(str(email.get_text())):
 			#should give a proper message or a pop up window as confirmation
 			dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK,"entries should follow the right format ")
+			dialog.set_title("Error message")
 			dialog.run()
 			dialog.close()
 			
 		elif len(str(email.get_text())) == 0:
 		        dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "No email entered, please enter an email")
+		        dialog.set_title("Error message")
 		        dialog.run()
 		        dialog.close()
 		     
 		elif len(data1)>0:
 		        dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "This email is already exist!")
+		        dialog.set_title("Error message")
 		        dialog.run()
 		        dialog.close()
 		
@@ -91,6 +100,7 @@ class UpdateUser():
 			
 			#should give a proper message or a pop up window as confirmation
 			dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"Information has been updated")
+			dialog.set_title("Confirmation message")
 			respond = dialog.run()
 			if respond == Gtk.ResponseType.OK:
 				
@@ -104,13 +114,9 @@ class UpdateUser():
 		self.window.destroy()
 		self.window = ManageUsersAccounts.ManageUsersAccounts(self.UN, self.userType)
 		
+		#Logout
 	def logout(self,button, a):
 		self.window.destroy()
 		self.window=login.loginClass()	
 		
 		
-		
-		
-
-#window=UpdateUser()
-#Gtk.main()

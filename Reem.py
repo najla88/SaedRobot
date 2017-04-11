@@ -1,3 +1,4 @@
+#written by : Reem AlJunaid, CS, Imam Abdulrahman AlFaisal University
 import sqlite3
 import gi
 import json
@@ -15,7 +16,11 @@ class TreeViewFilterWindow(Gtk.Window):
     builder = None
     window = None
     box = None
+    
+    #starting function
     def __init__(self):
+		
+	#connect to the desired window from glade file
 	self.builder = Gtk.Builder()
 	self.builder.add_from_file("Saed.glade")
 	self.window = self.builder.get_object("window2")	

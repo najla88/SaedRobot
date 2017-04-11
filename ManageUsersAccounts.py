@@ -1,3 +1,4 @@
+#written by : Reem AlJunaid, CS, Imam Abdulrahman AlFaisal University
 import sqlite3
 import gi
 import json
@@ -18,18 +19,28 @@ class ManageUsersAccounts():
     grid = None
     MyUsername = None
     userType = None
+    
+    #starting function
     def __init__(self, Username, kind):
+		
+	#get the username+type
 	self.MyUsername = Username
 	self.userType = kind
+	
+	#connect to the desired window from glade file
 	self.builder = Gtk.Builder()
 	self.builder.add_from_file("Saed.glade")
 	self.window = self.builder.get_object("window2")	
+	
+	#get all the objects
 	self.grid=self.builder.get_object("usersTable")
 	addBtn=self.builder.get_object("addBtn")
 	self.editBtn=self.builder.get_object("editBtn")
 	self.deleteBtn=self.builder.get_object("deleteBtn")
 	logoutBtn=self.builder.get_object("logoutBtn2")
 	addBtn.connect("clicked",self.onAddUserButtonPressed)
+	
+	#connect to the db+get users info
 	con = sqlite3.connect('SaedRobot.db', timeout=4000)
 	cur = con.cursor()
 	cur.execute("SELECT USERNAME, EMAIL from users")
@@ -71,6 +82,7 @@ class ManageUsersAccounts():
 	self.deleteBtn.connect("clicked",self.onDeleteButtonPressed,self.tree_selection)
 	self.editBtn.connect("clicked",self.onEditButtonPressed,self.tree_selection)
 	
+	#disable delete+edit buttons
 	self.deleteBtn.set_sensitive(False)
 	self.editBtn.set_sensitive(False)
 	
@@ -78,12 +90,13 @@ class ManageUsersAccounts():
 	
 	self.window.show_all()
         
-
+	#go to add new user interface
     def onAddUserButtonPressed(self, button):
         import AddNewUser
         self.window.destroy()
         self.window=AddNewUser.AddNewUser(self.MyUsername,self.userType)
-
+	
+	#go to update user info interface
     def onEditButtonPressed(self, button, selection):
 		model,list_iter = selection.get_selected () 
 		valu = None
@@ -91,10 +104,14 @@ class ManageUsersAccounts():
 		   value = model[list_iter][0]
         	self.window.destroy()
         	self.window=updateUserInterface.UpdateUser(self.MyUsername,self.userType,value)
-
+	
+	#delete the selected user
     def onDeleteButtonPressed(self,button, selection):
-		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.YES_NO, "Are you sure you want to delete this user?")
+		#ask the user to be sure
+		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.QUESTION,Gtk.ButtonsType.YES_NO, "Are you sure you want to delete this user?")
+		dialog.set_title("Confirmation message")
 		response = dialog.run()
+			#yes >>delete
         	if response == Gtk.ResponseType.YES:
 		   model,list_iter = selection.get_selected () 
 		   valu = None
@@ -133,12 +150,13 @@ class ManageUsersAccounts():
         	   self.editBtn.set_sensitive(False)		
             
         	dialog.close()
-               
+     #back to home admin      
     def onBackToMainAdminMenuButtonPressed(self, button, a):
 	import MainAdminMenu
         self.window.destroy()
         self.window=MainAdminMenu.MainAdminMenu(self.MyUsername,self.userType)
-
+	
+	#activate Edit+delete buttons for the selected user
     def onSelectionChanged(self, tree_selection) :
 	(model, pathlist) = tree_selection.get_selected_rows()
 	self.deleteBtn.set_sensitive(True)
@@ -147,6 +165,7 @@ class ManageUsersAccounts():
 	    tree_iter = model.get_iter(path)
             value = model.get_value(tree_iter,0)
 
+	#Logout
     def onLogoutButtonPressed(self, button):
 	self.window.destroy()
 	self.window=login.loginClass()   

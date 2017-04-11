@@ -1,3 +1,4 @@
+#written by : Reem AlJunaid, CS, Imam Abdulrahman AlFaisal University
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -19,6 +20,7 @@ class AddNewUser():
     MyUsername = None
     userType=None
     
+    #starting function
     def __init__(self, Username, kind):
 	self.MyUsername = Username
 	self.userType=kind
@@ -54,31 +56,37 @@ class AddNewUser():
         
         if len(str(self.username.get_text())) == 0:
            dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "No username entered, please enter a username")
+           dialog.set_title("Error message")
            dialog.run()
            dialog.close()
            
         elif len(str(self.email.get_text())) == 0:
            dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "No email entered, please enter an email")
+           dialog.set_title("Error message")
            dialog.run()
            dialog.close()
            
         elif len(data)>0:
            dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "This username is already exist!")
+           dialog.set_title("Error message")
            dialog.run()
            dialog.close()
              
         elif len(data1)>0:
            dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "This email is already exist!")
+           dialog.set_title("Error message")
            dialog.run()
            dialog.close()
            
         elif not re.match("^[a-zA-Z0-9_]+$", str(self.username.get_text())):
            dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "Invalid username address, please enter a valid username.")
+           dialog.set_title("Error message")
            dialog.run()
            dialog.close()      
                           
         elif not validate_email(str(self.email.get_text())):
            dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK, "Invalid email address, please enter a valid address.")
+           dialog.set_title("Error message")
            dialog.run()
            dialog.close()
            
@@ -88,8 +96,12 @@ class AddNewUser():
 			 db.commit()
 			 send_email(password,"Saed Robot - Account Password",str(self.email.get_text()) )
 			 dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK, "The user has been added")
+			 dialog.set_title("Confirmation message")
 			 dialog.run()
 			 dialog.close()
+			 self.window.destroy()
+			 self.window=ManageUsersAccounts.ManageUsersAccounts(self.MyUsername, self.userType)
+		
 			 
     def onBackToManageUsersButtonPressed(self, button, a):
         self.window.destroy()

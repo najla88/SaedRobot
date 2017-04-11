@@ -1,3 +1,4 @@
+#written by : Zainab AlManea, CS, Imam Abdulrahman AlFaisal University
 import sqlite3
 import gi
 import json
@@ -7,11 +8,6 @@ from gi.repository import Gtk
 import MainAdminMenu
 import login
 import maryam
-
-
-
-
-
 
 class ChooseDes():
 	
@@ -29,24 +25,29 @@ class ChooseDes():
 	Username=None
 	list_tapes=None
 	
-	
+	#starting function
 	def __init__(self, tl,username,kind):
-	#def __init__(self):
+		
+		#connect to the db
 		db = sqlite3.connect('SaedRobot.db')
 		cur = db.cursor()
 		cur.execute("SELECT RACKNAME from movement where STATE=1")
 		list1 = cur.fetchall()
 		db.close()
+		
+		#connect to the desired window from glade file
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("ChooseDes.glade")
 		self.window = self.builder.get_object("window1")
+		
+		#get all the objects
 		self.grid=self.builder.get_object("grid3")
 		self.GoBtn=self.builder.get_object("GoBtn")
-		#backBtn=self.builder.get_object("backBtn")
-		#backBtn.connect("clicked",self.back)
 		self.GoBtn.set_sensitive(False)
 		logoutBtn=self.builder.get_object("logoutBtn1")
 		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)
+		
+		#set the list of racks, username, and user type
 		self.list_tapes=tl
 		self.userType=kind
 		self.Username= username
@@ -84,12 +85,8 @@ class ChooseDes():
 
 
 	
-
+	#go button
 	def Go(self,button, s):
-			#self.list_tapes = lt
-			#self.list_tapes.append("C00001")
-			#self.list_tapes.append("C00002")
-			#self.list_tapes.append("C00003")
 			index=len(self.list_tapes)
 			print index
 			model,list_iter = s.get_selected () 
@@ -100,20 +97,18 @@ class ChooseDes():
 			newlist=self.list_tapes[0:]
 			
 			for VOLSER in self.list_tapes:
+				#connect+query the db to get the right volser position
 				db1 = sqlite3.connect('SaedRobot.db', timeout = 4000)
 				c1 = db1.cursor()
 				c1.execute("SELECT RACK from inventory where VOLSER=?" , (VOLSER,))
 				Rack1 = c1.fetchone()
 				print "here + "+"VOLSER :"+VOLSER+" the rack:"+Rack1[0]
 				
-			
-				if Rack1[0] == value:
-					print "tammam"
- 
-					
-				else:
+			    # if the rack is not compatible with our db then popup message will appear
+				if not(Rack1[0] == value):
 					print "error"
 					dialog2 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"The selected destination: "+value +" for the tape: "+VOLSER+" is not compatable with our database. Proceed anyway?")
+					dialog.set_title("Confirmation message")
 					respond=dialog2.run()
 					if respond == Gtk.ResponseType.YES:
 						print "respond is yes"
@@ -129,14 +124,17 @@ class ChooseDes():
 							
 			sa=len(newlist)
 			print sa
+			#no tapes
 			if sa==0:
-				dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"There is NO tape to deliver")
+				dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK,"There is NO tape to deliver")
+				dialog.set_title("Error message")
 				dialog1.run()
 				dialog1.close()
 				
-			
+			#successful delivery
 			elif sa!=0:
-				dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Delivery is in progress")
+				dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"Delivery is in progress")
+				dialog.set_title("Confirmation message")
 				dialog1.run()
 				dialog1.close()
 			
@@ -146,7 +144,8 @@ class ChooseDes():
 			
 			self.window.destroy()
 			self.window=login.loginClass()
-			
+	
+	#back button		
 	def back(self,button,a):
 		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"Do you want to cancel this task?")
 		respond=dialog.run()
@@ -156,7 +155,6 @@ class ChooseDes():
 				self.window.destroy()
 				del self.list_tapes[:]
 				self.window=MainAdminMenu.MainAdminMenu(self.Username,self.userType)
-				#self.window=MainAdminMenu.MainAdminMenu()
 				dialog.close()
 			else:
 				self.window.destroy()
@@ -186,6 +184,7 @@ class ChooseDes():
 			self.GoBtn.set_sensitive(True)
 
 	
+	#Logout
 	def onLogoutButtonPressedButtonPressed(self, button):
 		self.window.destroy()
 		self.window=login.loginClass() 

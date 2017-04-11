@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#written by : Najla AlGhofaili, CS, Imam Abdulrahman AlFaisal University
 import sqlite3
 from common import id_generator,send_email
 import gi
@@ -15,17 +15,18 @@ class loginClass():
 	builder =None
 	window = None
 	
+	#starting function
 	def __init__(self):
+		#connect to the desired window from glade file
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("Loin.glade")
 		self.window = self.builder.get_object("window1")
+		
+		#get all the objects
 		loginBtn=self.builder.get_object("loginBtn")
 		forgotPassBtn=self.builder.get_object("forgotBtn")
 		loginBtn.connect("clicked",self.login)
 		forgotPassBtn.connect("clicked",self.forgot)
-		
-		
-		
 		backbox=self.builder.get_object("backbox")
 		logout=self.builder.get_object("logout")
 		logout.set_label('')
@@ -36,14 +37,10 @@ class loginClass():
 		backbox.set_sensitive(0)
 		logout.set_sensitive(0)
 		
-		
-		
-		
+		#to style the screens using CSS code
 		style_provider = Gtk.CssProvider()
 		
 		css = """
-		
-		
 		
 		GtkWindow{
 		background: #ffffff;
@@ -122,38 +119,43 @@ class loginClass():
 		
 		
 
-
+	#login the user to the system
 	def login(self,button):
 		
+		#get the username + password
 		username = self.builder.get_object("username")
 		password = self.builder.get_object("password")
 
+		#connect to the db
 		db = sqlite3.connect('SaedRobot.db')
 		c = db.cursor()
 		c.execute('SELECT * from users WHERE username= ? AND password= ?' , (str(username.get_text()), str(password.get_text())))
 		data=c.fetchone()
 		
+		#entries are valid
 		if data != None and len(data)>0:
 		
-			print "Welcome"
 			self.window.destroy()
+			
+			#regular user
 			if data[3]==0:
 				self.window=maryam.userHome(data[0],data[3])
+			#admin user
 			elif data[3]==1:
 				self.window=MainAdminMenu.MainAdminMenu(data[0],data[3])
 
-				
-
+		#Invalid entries
 		else:
-			#loginError.set_text('Invalid username or password, please try again')
 			dialog=Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK,"Invalid username or password, please try again")
+			dialog.set_title("Error message")
 			dialog.run()
 			dialog.close()
-			
+	#go to forgot password interface	
 	def forgot(self,button):
 		self.window.destroy()
 		self.window =forgotPass.forgot()
-		
+	
+	#go to the previous interface
 	def back(self,button,a):
 		print 'clicked'	
 		

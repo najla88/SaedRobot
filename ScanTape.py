@@ -16,13 +16,13 @@ class ScanTape():
 	Username=None
 	checkBarcode = None
 	
+	#starting function
 	def __init__(self, tl,username,kind ):
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file("ScanMoreInterface.glade")
 		self.window = self.builder.get_object("window1")
-		#backBtn=self.builder.get_object("backBtn")
-		#backBtn.connect("clicked",self.back)
 		#######################################################
+		#get user type+ name
 		self.userType=kind
 		self.Username= username
 		########################################################
@@ -30,15 +30,12 @@ class ScanTape():
 		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)	
 		
 		
-		
+		#bring the objects to the screen
 		backbox=self.builder.get_object("backbox2")
 		backbox.connect("button-release-event",self.back)
 		image=self.builder.get_object("image1")
 		image.set_visible(1)
 		backbox.set_sensitive(1)
-		
-		
-		
 		
 		
 		
@@ -52,6 +49,7 @@ class ScanTape():
 		#show
 		self.window.show()
 	
+	#start scanning
 	def Scan(self,button):
 		#Get the Barcode and move to tape info interface
 		barcode=self.barcode1.get_text()
@@ -64,13 +62,15 @@ class ScanTape():
 			self.checkBarcode=c.fetchone()
 	
 			if self.checkBarcode != None:
-				#move to tapes info with the specific barcode
+				#tape alreade scanned
 				if self.checkBarcode[0] in self.tapesList :
-					dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"You have already scanned this tap")
+					dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"You have already scanned this tape")
+					dialog.set_title("Warning message")
 					dialog.run()
 					dialog.close()
 					self.barcode1.set_text("")
 					
+				#valid tape
 				else :
 					print self.checkBarcode[0]
 					self.window.destroy()
@@ -78,39 +78,47 @@ class ScanTape():
 			else:
 				 # if Barcode is not in the DB alert with warning message 
 				dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Scanned barcode does not belong to our database .. try another one")
+				dialog.set_title("Warning message")
 				dialog.run()
 				dialog.close()
 				self.barcode1.set_text("")
-				print "Warning dialog closed"
 		else:
 			 # if no Barcode was there alert with warning message 
 			dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Barcode is not detected .. Try Again")
+			dialog.set_title("Warning message")
 			dialog.run()
 			dialog.close()
 			print "Warning dialog closed"
-			
+	
+	#back		
 	def back(self,button,a):
 		
-		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"Do you want to cancel this task?")
+		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.QUESTION,Gtk.ButtonsType.YES_NO,"Do you want to cancel this task?")
+		dialog.set_title("Confirmation message")
 		respond=dialog.run()
+		
+		#cancel the task
 		if respond == Gtk.ResponseType.YES:
 			print "Yes"
+			#go to Home Admin
 			if (self.userType==1):
 				self.window.destroy()
 				del self.tapesList[:]
 				self.window=MainAdminMenu.MainAdminMenu(self.Username,self.userType)
-				#self.window=MainAdminMenu.MainAdminMenu()
 				dialog.close()
+			#go to Home User
 			else:
 				self.window.destroy()
 				del self.tapesList[:]
 				self.window=maryam.userHome(self.Username,self.userType)
 				print self.tapesList
 				dialog.close()
-
+		#do not cancel the task
 		elif respond == Gtk.ResponseType.NO:
 			print "No"
 			dialog.close()
+			
+	#Logout
 	def onLogoutButtonPressedButtonPressed(self, button):
 			self.window.destroy()
 			self.window=login.loginClass()       	
