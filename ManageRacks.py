@@ -43,7 +43,7 @@ class ManageRack():
 		#get all the objects
 		self.grid=self.builder.get_object("grid3")
 		AddBtn=self.builder.get_object("AddBtn")
-		self.DelBtn=self.builder.get_object("DelBtn")\
+		self.DelBtn=self.builder.get_object("DelBtn")
 		logoutBtn=self.builder.get_object("logoutBtn")
 		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)
 		backbox=self.builder.get_object("backBtn")

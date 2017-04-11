@@ -67,8 +67,8 @@ class change_password():
 		##validation 
 		#all the fields should be filled
 		if  not (self.newPassEntry.get_text() and self.conPassEntry.get_text() and self.oldPassEntry.get_text()):
-			dialog=Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Please fill all the fields")
-			dialog.set_title("Warning message")
+			dialog=Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK,"Please fill all the fields")
+			dialog.set_title("Error message")
 			dialog.run()
 			dialog.close()
 		
@@ -114,9 +114,8 @@ class change_password():
 						dialog.set_title("Confirmation message")
 						dialog.run()
 						dialog.close()
-						self.back(button)
-		self.window.destroy()
-		self.window=maryam.userHome(self.Username, self.userType)
+						self.window.destroy()
+						self.window=maryam.userHome(self.Username, self.userType)
 		
 	#back to the previous screen
 	def back(self, button,a):

@@ -108,7 +108,7 @@ class ChooseDes():
 				if not(Rack1[0] == value):
 					print "error"
 					dialog2 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"The selected destination: "+value +" for the tape: "+VOLSER+" is not compatable with our database. Proceed anyway?")
-					dialog.set_title("Confirmation message")
+					dialog2.set_title("Confirmation message")
 					respond=dialog2.run()
 					if respond == Gtk.ResponseType.YES:
 						print "respond is yes"
@@ -127,14 +127,14 @@ class ChooseDes():
 			#no tapes
 			if sa==0:
 				dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK,"There is NO tape to deliver")
-				dialog.set_title("Error message")
+				dialog1.set_title("Error message")
 				dialog1.run()
 				dialog1.close()
 				
 			#successful delivery
 			elif sa!=0:
 				dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"Delivery is in progress")
-				dialog.set_title("Confirmation message")
+				dialog1.set_title("Confirmation message")
 				dialog1.run()
 				dialog1.close()
 			

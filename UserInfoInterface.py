@@ -41,10 +41,10 @@ class UserInfo():
 		if getEmail != None:
 			email.set_text(getEmail[0])
 		else: # if no email was there alert with warning message 
-			dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Something wrong .. Try Again")
+			dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK,"Something wrong .. Try Again")
+			dialog.set_title("Error message")
 			dialog.run()
 			dialog.close()
-			print "Warning dialog closed"
 		
 	def Edit(self,button):
 		#move to UpdateUserInterface and pass the username
@@ -54,6 +54,7 @@ class UserInfo():
 		
 		#should give a proper message or a pop up window as confirmation
 		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"Information has been updated")
+		dialog.set_title("Confirmation message")
 		respond=dialog.run()
 		if respond == Gtk.ResponseType.YES:
 			print "Yes"
@@ -65,6 +66,7 @@ class UserInfo():
 			
 			#should give a proper message or a pop up window as confirmation
 			dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"Account has been deleted")
+			dialog1.set_title("Confirmation message")
 			dialog1.run()
 			dialog1.close()
 			print "Deleted Confirmation dialog closed"
@@ -83,6 +85,3 @@ class UserInfo():
 		
 		
 		
-
-#window=UserInfo()
-#Gtk.main()

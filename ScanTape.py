@@ -42,6 +42,7 @@ class ScanTape():
 		# connect the buttons and make their event listener
 		ScanBtn=self.builder.get_object("Scan")
 		self.barcode1 = self.builder.get_object("barcode")
+		self.barcode1.set_text("")
 		ScanBtn.connect("clicked",self.Scan)
 		self.tapesList= tl
 		if self.tapesList != None:
@@ -53,7 +54,7 @@ class ScanTape():
 	def Scan(self,button):
 		#Get the Barcode and move to tape info interface
 		barcode=self.barcode1.get_text()
-		if barcode != None:
+		if barcode != "":
 			print "Scanned Barcode is: "+barcode
 			db = sqlite3.connect('SaedRobot.db')
 			c = db.cursor()
@@ -64,8 +65,8 @@ class ScanTape():
 			if self.checkBarcode != None:
 				#tape alreade scanned
 				if self.checkBarcode[0] in self.tapesList :
-					dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"You have already scanned this tape")
-					dialog.set_title("Warning message")
+					dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK,"You have already scanned this tape")
+					dialog.set_title("Error message")
 					dialog.run()
 					dialog.close()
 					self.barcode1.set_text("")
@@ -77,15 +78,15 @@ class ScanTape():
 					self.window =maryam.tapeInfo(self.checkBarcode[0] , self.tapesList,self.Username,self.userType)
 			else:
 				 # if Barcode is not in the DB alert with warning message 
-				dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Scanned barcode does not belong to our database .. try another one")
-				dialog.set_title("Warning message")
+				dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK,"Scanned barcode does not belong to our database .. try another one")
+				dialog.set_title("Error message")
 				dialog.run()
 				dialog.close()
 				self.barcode1.set_text("")
 		else:
 			 # if no Barcode was there alert with warning message 
-			dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING,Gtk.ButtonsType.OK,"Barcode is not detected .. Try Again")
-			dialog.set_title("Warning message")
+			dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK,"Barcode is not detected .. Try Again")
+			dialog.set_title("Error message")
 			dialog.run()
 			dialog.close()
 			print "Warning dialog closed"
