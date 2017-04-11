@@ -112,8 +112,9 @@
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_right">222</property>
                 <property name="margin_top">89</property>
-                <property name="label" translatable="yes">Manage Racks</property>
+                <property name="label" translatable="yes">Please choose rack to manage:</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -158,8 +159,9 @@
           </packing>
         </child>
         <child>
-          <object class="GtkGrid" id="grid2">
-            <property name="height_request">30</property>
+          <object class="GtkGrid" id="grid3">
+            <property name="width_request">460</property>
+            <property name="height_request">190</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">center</property>
@@ -167,45 +169,7 @@
             <property name="margin_bottom">22</property>
             <property name="column_homogeneous">True</property>
             <child>
-              <object class="GtkGrid" id="grid3">
-                <property name="width_request">253</property>
-                <property name="height_request">100</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_top">22</property>
-                <property name="margin_bottom">22</property>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">1</property>
-              </packing>
+              <placeholder/>
             </child>
             <child>
               <placeholder/>
@@ -312,25 +276,21 @@
               <placeholder/>
             </child>
             <child>
-              <object class="GtkLabel" id="label8">
+              <placeholder/>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="halign">center</property>
-                <property name="valign">center</property>
-                <property name="margin_top">40</property>
-                <property name="label" translatable="yes">Add New Rack</property>
-                <attributes>
-                  <attribute name="font-desc" value="DejaVu Sans Bold 13"/>
-                </attributes>
+                <property name="margin_right">262</property>
+                <property name="margin_top">89</property>
+                <property name="label" translatable="yes">Please choose rack to add:</property>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">2</property>
+                <property name="position">3</property>
               </packing>
-            </child>
-            <child>
-              <placeholder/>
             </child>
           </object>
           <packing>
@@ -339,56 +299,33 @@
           </packing>
         </child>
         <child>
-          <object class="GtkGrid" id="grid5">
+          <object class="GtkButton" id="Add1Btn">
+            <property name="label" translatable="yes">Add</property>
+            <property name="width_request">460</property>
+            <property name="visible">True</property>
+            <property name="sensitive">False</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="halign">center</property>
+            <property name="margin_bottom">20</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkGrid" id="grid6">
+            <property name="width_request">460</property>
+            <property name="height_request">190</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">center</property>
             <property name="valign">center</property>
-            <property name="margin_top">22</property>
             <property name="margin_bottom">22</property>
             <property name="column_homogeneous">True</property>
             <child>
-              <object class="GtkGrid" id="grid6">
-                <property name="width_request">250</property>
-                <property name="height_request">100</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">center</property>
-                <property name="valign">center</property>
-                <property name="margin_top">30</property>
-                <property name="margin_bottom">30</property>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">1</property>
-              </packing>
+              <placeholder/>
             </child>
             <child>
               <placeholder/>
@@ -406,20 +343,10 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton" id="Add1Btn">
-            <property name="label" translatable="yes">Add</property>
-            <property name="width_request">460</property>
-            <property name="visible">True</property>
-            <property name="sensitive">False</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="halign">center</property>
-            <property name="margin_bottom">15</property>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">2</property>
-          </packing>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
         </child>
         <child>
           <placeholder/>
