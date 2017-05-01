@@ -7,7 +7,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import MainAdminMenu
 import login
-import maryam
+import MainUserMenu
 
 class ChooseDes():
 	
@@ -88,7 +88,6 @@ class ChooseDes():
 	#go button
 	def Go(self,button, s):
 			index=len(self.list_tapes)
-			print index
 			model,list_iter = s.get_selected () 
 			value = None
 			if list_iter is not None:
@@ -102,28 +101,22 @@ class ChooseDes():
 				c1 = db1.cursor()
 				c1.execute("SELECT RACK from inventory where VOLSER=?" , (VOLSER,))
 				Rack1 = c1.fetchone()
-				print "here + "+"VOLSER :"+VOLSER+" the rack:"+Rack1[0]
 				
 			    # if the rack is not compatible with our db then popup message will appear
 				if not(Rack1[0] == value):
-					print "error"
 					dialog2 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"The selected destination: "+value +" for the tape: "+VOLSER+" is not compatable with our database. Proceed anyway?")
 					dialog2.set_title("Confirmation message")
 					respond=dialog2.run()
 					if respond == Gtk.ResponseType.YES:
-						print "respond is yes"
 						dialog2.destroy()
 					else: 
-						print newlist						
 						newlist.remove(VOLSER)
-						print newlist
 						dialog2.destroy()
 						
 						
 						
 							
 			sa=len(newlist)
-			print sa
 			#no tapes
 			if sa==0:
 				dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK,"There is NO tape to deliver")
@@ -150,7 +143,7 @@ class ChooseDes():
 		dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"Do you want to cancel this task?")
 		respond=dialog.run()
 		if respond == Gtk.ResponseType.YES:
-			print "Yes"
+
 			if (self.userType==1):
 				self.window.destroy()
 				del self.list_tapes[:]
@@ -159,12 +152,10 @@ class ChooseDes():
 			else:
 				self.window.destroy()
 				del self.list_tapes[:]
-				self.window=maryam.userHome(self.Username,self.userType)
-				print self.list_tapes
+				self.window=MainUserMenu.userHome(self.Username,self.userType)
 				dialog.close()
 
 		elif respond == Gtk.ResponseType.NO:
-			print "No"
 			dialog.close()
 			
 				
@@ -180,7 +171,6 @@ class ChooseDes():
 		for path in pathlist :
 			tree_iter = model.get_iter(path)
 			value = model.get_value(tree_iter,0)
-			print value
 			self.GoBtn.set_sensitive(True)
 
 	

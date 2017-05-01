@@ -137,9 +137,7 @@ class tapeInfo():
 	def cancel(self,button): #Go to ScanTape interface with the TapeList with no further changes
 		self.window.destroy()
 		index = len(self.tapesList)
-		print self.tapesList
 		del self.tapesList[index - 1]
-		print self.tapesList
 		self.window=ScanTape.ScanTape(self.tapesList,self.Username,self.userType)
 		
 	#Logout

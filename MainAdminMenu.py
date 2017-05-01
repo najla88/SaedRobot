@@ -19,7 +19,7 @@ class MainAdminMenu():
 		
 		#connect to the desired window from glade file
 		self.builder = Gtk.Builder()
-		self.builder.add_from_file("Saed.glade")
+		self.builder.add_from_file("AdminHome.glade")
 		self.window = self.builder.get_object("window1")
 		
 		#get the user name+type

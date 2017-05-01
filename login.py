@@ -5,7 +5,7 @@ from common import id_generator,send_email
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk,Gdk
-import maryam
+import MainUserMenu
 import MainAdminMenu
 import forgotPass
 import subprocess
@@ -21,7 +21,7 @@ class loginClass():
 	def __init__(self):
 		#connect to the desired window from glade file
 		self.builder = Gtk.Builder()
-		self.builder.add_from_file("Loin.glade")
+		self.builder.add_from_file("Login.glade")
 		self.window = self.builder.get_object("window1")
 		
 		#get all the objects
@@ -156,7 +156,7 @@ class loginClass():
 			
 			#regular user
 			if data[3]==0:
-				self.window=maryam.userHome(data[0],data[3])
+				self.window=MainUserMenu.userHome(data[0],data[3])
 			#admin user
 			elif data[3]==1:
 				self.window=MainAdminMenu.MainAdminMenu(data[0],data[3])
@@ -174,8 +174,6 @@ class loginClass():
 	
 	#go to the previous interface
 	def back(self,button,a):
-		print 'clicked'	
 		
 	def logout(self,button,a):
-		print 'logout'			
 

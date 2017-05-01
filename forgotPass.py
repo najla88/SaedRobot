@@ -4,7 +4,7 @@ from common import id_generator,send_email
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk,Gdk
-import maryam
+import MainUserMenu
 import login
 import subprocess
 
@@ -17,7 +17,7 @@ class forgot():
 	def __init__(self):
 		#connect to the desired window from glade file
 		self.builder = Gtk.Builder()
-		self.builder.add_from_file("Loin.glade")
+		self.builder.add_from_file("Login.glade")
 		self.window = self.builder.get_object("window2")
 		resetBtn=self.builder.get_object("resetBtn")
 		resetBtn.connect("clicked",self.reset)
@@ -72,7 +72,7 @@ class forgot():
 			dialog.set_title("Confirmation message")
 			dialog.run()
 			dialog.close()
-			self.window=loginClass()
+			self.window=login.loginClass()
 
 		# show error message if no such email exists
 		else:

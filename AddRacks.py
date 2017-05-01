@@ -144,7 +144,6 @@ class AddRack():
 		for path in pathlist :
 			tree_iter = model.get_iter(path)
 			value = model.get_value(tree_iter,0)
-			print value
 			self.Add1Btn.set_sensitive(True)
 	#Logout
 	def onLogoutButtonPressedButtonPressed(self, button):

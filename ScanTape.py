@@ -3,7 +3,7 @@ import sqlite3
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
-import maryam
+import MainUserMenu
 import MainAdminMenu
 import login
 import subprocess
@@ -51,7 +51,6 @@ class ScanTape():
 		ScanBtn.connect("clicked",self.Scan)
 		self.tapesList= tl
 		if self.tapesList != None:
-			print self.tapesList
 		#show
 		self.window.show()
 	
@@ -66,7 +65,6 @@ class ScanTape():
 		#Get the Barcode and move to tape info interface
 		barcode=self.barcode1.get_text()
 		if barcode != "":
-			print "Scanned Barcode is: "+barcode
 			db = sqlite3.connect('SaedRobot.db')
 			c = db.cursor()
 			#check if the barcode belongs to the database
@@ -84,9 +82,8 @@ class ScanTape():
 					
 				#valid tape
 				else :
-					print self.checkBarcode[0]
 					self.window.destroy()
-					self.window =maryam.tapeInfo(self.checkBarcode[0] , self.tapesList,self.Username,self.userType)
+					self.window =MainUserMenu.tapeInfo(self.checkBarcode[0] , self.tapesList,self.Username,self.userType)
 			else:
 				 # if Barcode is not in the DB alert with warning message 
 				dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR,Gtk.ButtonsType.OK,"Scanned barcode does not belong to our database .. try another one")
@@ -100,7 +97,6 @@ class ScanTape():
 			dialog.set_title("Error message")
 			dialog.run()
 			dialog.close()
-			print "Warning dialog closed"
 	
 	#back		
 	def back(self,button,a):
@@ -111,7 +107,6 @@ class ScanTape():
 		
 		#cancel the task
 		if respond == Gtk.ResponseType.YES:
-			print "Yes"
 			#go to Home Admin
 			if (self.userType==1):
 				self.window.destroy()
@@ -122,12 +117,10 @@ class ScanTape():
 			else:
 				self.window.destroy()
 				del self.tapesList[:]
-				self.window=maryam.userHome(self.Username,self.userType)
-				print self.tapesList
+				self.window=MainUserMenu.userHome(self.Username,self.userType)
 				dialog.close()
 		#do not cancel the task
 		elif respond == Gtk.ResponseType.NO:
-			print "No"
 			dialog.close()
 			
 	#Logout

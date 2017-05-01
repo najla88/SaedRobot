@@ -55,7 +55,6 @@ class UpdateUser():
 		#bring the user's Email and paste it in the text field
 		c.execute("SELECT email from users WHERE username=?",(self.UN,))
 		getEmail=c.fetchone()
-		print getEmail[0]
 		if getEmail != None:
 			email.set_text(getEmail[0])
 		else: # if no Email was there alert with warning message 
@@ -63,7 +62,6 @@ class UpdateUser():
 			dialog.set_title("Error message")
 			dialog.run()
 			dialog.close()
-			print "Warning dialog closed"
 			
 	
 		email.connect("focus-in-event",self.focus_in)

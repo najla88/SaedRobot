@@ -37,7 +37,6 @@ class UserInfo():
 		c = db.cursor()
 		c.execute("SELECT email from users WHERE username=? ",(self.UN,))
 		getEmail=c.fetchone()
-		print getEmail[0]
 		if getEmail != None:
 			email.set_text(getEmail[0])
 		else: # if no email was there alert with warning message 
@@ -57,7 +56,6 @@ class UserInfo():
 		dialog.set_title("Confirmation message")
 		respond=dialog.run()
 		if respond == Gtk.ResponseType.YES:
-			print "Yes"
 			# connect to the DB + perform the query
 			db = sqlite3.connect('SaedRobot.db')
 			c = db.cursor()
@@ -69,13 +67,11 @@ class UserInfo():
 			dialog1.set_title("Confirmation message")
 			dialog1.run()
 			dialog1.close()
-			print "Deleted Confirmation dialog closed"
 			dialog.close()
 			#move to the previous interface after deleteing the account and giving the proper Confirmation
 			window2 = updateUserInterface.UpdateUser(username.get_text())
 			window2.show()
 		elif respond == Gtk.ResponseType.NO:
-			print "No"
 			dialog.close()
 		
 			

@@ -27,7 +27,7 @@ class AddNewUser():
 		self.MyUsername = Username
 		self.userType=kind
 		self.builder = Gtk.Builder()
-		self.builder.add_from_file("Saed.glade")
+		self.builder.add_from_file("AdminHome.glade")
 		self.window = self.builder.get_object("window3")
 		self.username = self.builder.get_object("username")
 		self.email = self.builder.get_object("email")	

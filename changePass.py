@@ -4,7 +4,7 @@ from common import id_generator,send_email
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk,Gdk
-import maryam
+import MainUserMenu
 import login
 import subprocess
 
@@ -23,7 +23,7 @@ class change_password():
 	def __init__(self,username,kind):
 		#connect to the desired window from glade file
 		self.builder = Gtk.Builder()
-		self.builder.add_from_file("Loin.glade")
+		self.builder.add_from_file("Login.glade")
 		self.window = self.builder.get_object("window3")
 		
 		#get username
@@ -96,7 +96,6 @@ class change_password():
 			c.execute('SELECT password from users WHERE username= ?' , ( self.Username,))
 			
 			row=c.fetchone()
-			print row[0]
 			
 			#Invalid old password
 			if row[0] != self.oldPassEntry.get_text():
@@ -132,12 +131,12 @@ class change_password():
 						dialog.run()
 						dialog.close()
 						self.window.destroy()
-						self.window=maryam.userHome(self.Username, self.userType)
+						self.window=MainUserMenu.userHome(self.Username, self.userType)
 		
 	#back to the previous screen
 	def back(self, button,a):
 		self.window.destroy()
-		self.window=maryam.userHome(self.Username, self.userType)
+		self.window=MainUserMenu.userHome(self.Username, self.userType)
 	#Logout
 	def logout(self,button, a):
 		self.window.destroy()
