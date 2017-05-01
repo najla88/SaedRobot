@@ -1,5 +1,14 @@
 #!/usr/bin/python
-#written by : Najla AlGhofaili, CS, Imam Abdulrahman AlFaisal University
+
+########################################################################
+# 				   written by : Najla AlGhofaili, CS,				   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#   	This interface is the first interface the user will see    	   #
+#   	The users can sign in using their usernae and password	 	   #
+#																	   #
+########################################################################
 import sqlite3
 from common import id_generator,send_email
 import gi
@@ -32,8 +41,8 @@ class loginClass():
 		backbox=self.builder.get_object("backbox")
 		logout=self.builder.get_object("logout")
 		logout.set_label('')
-		logout.connect("button-release-event",self.logout)
-		backbox.connect("button-release-event",self.back)
+		#logout.connect("button-release-event",self.logout)
+		#backbox.connect("button-release-event",self.back)
 		image=self.builder.get_object("image1")
 		image.set_visible(0)
 		backbox.set_sensitive(0)
@@ -173,7 +182,5 @@ class loginClass():
 		self.window =forgotPass.forgot()
 	
 	#go to the previous interface
-	def back(self,button,a):
-		
-	def logout(self,button,a):
+	
 

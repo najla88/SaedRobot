@@ -1,4 +1,14 @@
-#written by : Najla AlGhofaili, CS, Imam Abdulrahman AlFaisal University
+
+########################################################################
+# 				   written by : Najla AlGhofaili, CS,				   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#   			This interface will let the user change their  		   #
+#    					passwords in the database		  			   #
+#																	   #
+########################################################################
+
 import sqlite3
 from common import id_generator,send_email
 import gi

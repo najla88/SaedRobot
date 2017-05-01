@@ -1,4 +1,14 @@
-#written by : Arwa AlKhunine, CS, Imam Abdulrahman AlFaisal University
+
+########################################################################
+# 					written by : Arwa AlKhunine, CS,				   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#  This interface will show the admin all the user's account from the  #
+# 	 db. The admin can manage these account by editing/deleting them   #
+#																	   #
+########################################################################
+
 import sqlite3
 import gi
 import updateUserInterface 

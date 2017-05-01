@@ -1,4 +1,13 @@
-#written by : Reem AlJunaid, CS, Imam Abdulrahman AlFaisal University
+
+########################################################################
+# 				  	 written by : Reem AlJunaid, CS,				   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#  	 This interface is for the admin to maage the users account  	   #
+#    	the admin can edit users info and delete user's account	   	   #
+#																	   #
+########################################################################
 import sqlite3
 import gi
 import json

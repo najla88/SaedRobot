@@ -1,4 +1,15 @@
-#written by : Reem AlJunaid, Najla AlGhofaili CS, Imam Abdulrahman AlFaisal University
+
+########################################################################
+# 			written by : Reem AlJunaid, Najla AlGhofaili, CS,		   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#   This files contains the common methods that will be used in many   #
+#  							 other files			    			   #
+#																	   #
+########################################################################
+
+
 import string
 import random
 import smtplib

@@ -1,5 +1,14 @@
 #!/usr/bin/python
-#written by : Reem AlJunaid, CS, Imam Abdulrahman AlFaisal University
+
+########################################################################
+# 				  	 written by : Reem AlJunaid, CS,				   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#  	 This interface manages the admin interface where the admin  	   #
+#    				can add new users to the database 		  		   #
+#																	   #
+########################################################################
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk

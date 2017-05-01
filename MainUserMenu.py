@@ -1,4 +1,14 @@
-#written by : Arwa AlKhunine, Maryam Al-Abdullatif, CS, Imam Abdulrahman AlFaisal University
+
+########################################################################
+# 		written by : Arwa AlKhunine, Maryam Al-Abdullatif, CS,		   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#  	 This interface is the user main menu where the users can  	 	   #
+#    	create new delivery task and change their passwords	   		   #
+#																	   #
+########################################################################
+
 import sqlite3
 from common import id_generator,send_email
 import gi

@@ -1,4 +1,14 @@
-#written by : Zainab AlManea, CS, Imam Abdulrahman AlFaisal University
+
+########################################################################
+# 				   written by : Zainab AlManea, CS,					   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#   	This interface will allow the user to choose the desired   	   #
+#   				destination for the delivery task	  			   #
+#																	   #
+########################################################################
+
 import sqlite3
 import gi
 import json

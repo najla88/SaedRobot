@@ -1,4 +1,14 @@
-#written by : Zainab AlManea, CS, Imam Abdulrahman AlFaisal University
+
+########################################################################
+# 				  	 written by : Zainab AlManea, CS,				   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#  	 This interface manages the admin interface where the admin  	   #
+#    			can add new racks and make them active		  		   #
+#																	   #
+########################################################################
+
 import sqlite3
 import gi
 import json

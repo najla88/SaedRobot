@@ -1,4 +1,14 @@
-#written by : Arwa AlKhunine, Maryam Al-Abdullatif, CS, Imam Abdulrahman AlFaisal University
+
+########################################################################
+# 		written by : Arwa AlKhunine, Maryam Al-Abdullatif, CS,		   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#  	 			This interface manages the scanned tapes   	 		   #
+#    The user can scan up to 3 tapes for a single delivery task		   #
+#																	   #
+########################################################################
+
 import sqlite3
 import gi
 gi.require_version('Gtk', '3.0')
@@ -52,7 +62,7 @@ class ScanTape():
 		self.tapesList= tl
 		if self.tapesList != None:
 		#show
-		self.window.show()
+			self.window.show()
 	
 	#show keyboard when the field is in focus
 	#def focus_in(self, entry, event):

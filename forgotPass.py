@@ -1,4 +1,15 @@
-#written by : Najla AlGhofaili, CS, Imam Abdulrahman AlFaisal University
+
+########################################################################
+# 				   written by : Najla AlGhofaili, CS,				   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#   This interface will allow the user to reset their password with    #
+#   an automatic password generator that will be sent via email		   #
+#																	   #
+########################################################################
+
+
 import sqlite3
 from common import id_generator,send_email
 import gi
@@ -72,6 +83,7 @@ class forgot():
 			dialog.set_title("Confirmation message")
 			dialog.run()
 			dialog.close()
+			self.window.destroy()
 			self.window=login.loginClass()
 
 		# show error message if no such email exists

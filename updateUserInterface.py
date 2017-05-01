@@ -1,4 +1,13 @@
-#written by : Arwa AlKhunine, CS, Imam Abdulrahman AlFaisal University
+
+########################################################################
+# 					written by : Arwa AlKhunine, CS,				   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#   This interface will allow the admin to manage the user's account   #
+#    	The admin can update or delete any user's account 	   		   #
+#																	   #
+########################################################################
 
 import sqlite3
 import gi

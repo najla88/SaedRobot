@@ -1,4 +1,13 @@
-#written by : Reem AlJunaid, CS, Imam Abdulrahman AlFaisal University
+########################################################################
+# 				  	 written by : Reem AlJunaid, CS,				   #
+# 				Imam Abdulrahman AlFaisal University				   #
+#----------------------------------------------------------------------#
+#																	   #
+#  	 This interface is the admin main menu where the admin can  	   #
+#    	manage users, racks and create new delivery task	   		   #
+#																	   #
+########################################################################
+
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk 
