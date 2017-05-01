@@ -57,13 +57,13 @@ class change_password():
 		self.window.show()
 		
 		self.oldPassEntry.connect("focus-in-event",self.focus_in)
-		self.oldPassEntry.connect("focus-out-event",self.focus_out)
+		#self.oldPassEntry.connect("focus-out-event",self.focus_out)
 		
 		self.newPassEntry.connect("focus-in-event",self.focus_in)
-		self.newPassEntry.connect("focus-out-event",self.focus_out)
+		#self.newPassEntry.connect("focus-out-event",self.focus_out)
 		
 		self.conPassEntry.connect("focus-in-event",self.focus_in)
-		self.conPassEntry.connect("focus-out-event",self.focus_out)
+		#self.conPassEntry.connect("focus-out-event",self.focus_out)
 
 	#show keyboard when the field is in focus
 	def focus_in(self, entry, event):
