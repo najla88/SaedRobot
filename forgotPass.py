@@ -78,7 +78,7 @@ class forgot():
 			c = db.cursor()
 			c.execute("update users set password=? where username=?" , (randPassword,username,))
 			db.commit()
-			send_email(randPassword,'Your New Password',email.get_text())
+			send_email(randPassword,username,"Saed Robot - Reset your password",email.get_text() )
 			dialog=Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"Your new password has been sent to your email")
 			dialog.set_title("Confirmation message")
 			dialog.run()

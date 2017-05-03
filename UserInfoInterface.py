@@ -39,6 +39,11 @@ class UserInfo():
 		BackBtn.connect("clicked",self.Back)
 		DeleteBtn.connect("clicked",self.Delete)
 		
+		
+		self.email.connect("focus-in-event",self.focus_in)
+		self.email.connect("focus-out-event",self.focus_out)
+		
+		
 		#show
 		window.show()
 		
@@ -54,6 +59,13 @@ class UserInfo():
 			dialog.set_title("Error message")
 			dialog.run()
 			dialog.close()
+			
+	#show keyboard when the field is in focus
+    def focus_in(self, entry, event):
+		subprocess.Popen(["onboard","20*10"])
+	#show keyboard when the field is in focus
+    def focus_out(self, entry, event):
+		subprocess.Popen(["pkill","onboard"])
 		
 	def Edit(self,button):
 		#move to UpdateUserInterface and pass the username

@@ -52,7 +52,7 @@ class AddNewUser():
 		self.window.show_all()
 
 		self.username.connect("focus-in-event",self.focus_in)
-		self.username.connect("focus-out-event",self.focus_out)
+		#self.username.connect("focus-out-event",self.focus_out)
 		self.email.connect("focus-in-event",self.focus_in)
 		self.email.connect("focus-out-event",self.focus_out)
 
@@ -116,7 +116,7 @@ class AddNewUser():
 			 password = id_generator()
 			 c.execute('INSERT INTO users(USERNAME,PASSWORD,EMAIL,ADMIN) VALUES (?,?,?,0)', (str(self.username.get_text()),str(password),str(self.email.get_text())))
 			 db.commit()
-			 send_email(password,"Saed Robot - Account Password",str(self.email.get_text()) )
+			 send_email(password,self.username.get_text(),"Saed Robot - Registration Confirmation",str(self.email.get_text()) )
 			 dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK, "The user has been added")
 			 dialog.set_title("Confirmation message")
 			 dialog.run()
