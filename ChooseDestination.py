@@ -38,12 +38,27 @@ class ChooseDes():
 	#starting function
 	def __init__(self, tl,username,kind):
 		
+		#set the list of racks, username, and user type
+		self.list_tapes=tl
+		self.userType=kind
+		self.Username= username
+		
 		#connect to the db
+		#db = sqlite3.connect('SaedRobot.db')
+		#cur = db.cursor()
+		#cur.execute("SELECT RACKNAME from movement where STATE=1")
+			
+		#list1 = cur.fetchall()
+		#db.close()
+		
 		db = sqlite3.connect('SaedRobot.db')
 		cur = db.cursor()
-		cur.execute("SELECT RACKNAME from movement where STATE=1")
+		cur.execute("SELECT RACK  FROM (select RACK, count (*) AS COUNTT from inventory where RACK in (SELECT RACKNAME from movement where STATE=1) group by RACK) WHERE COUNTT <= ? ;",3-len(self.list_tapes))
+
 		list1 = cur.fetchall()
 		db.close()
+		
+
 		
 		#connect to the desired window from glade file
 		self.builder = Gtk.Builder()
@@ -57,10 +72,7 @@ class ChooseDes():
 		logoutBtn=self.builder.get_object("logoutBtn1")
 		logoutBtn.connect("clicked",self.onLogoutButtonPressedButtonPressed)
 		
-		#set the list of racks, username, and user type
-		self.list_tapes=tl
-		self.userType=kind
-		self.Username= username
+		
 		backbox=self.builder.get_object("backBtn")
 		backbox.connect("button-release-event",self.back)
 
@@ -136,6 +148,42 @@ class ChooseDes():
 				
 			#successful delivery
 			elif sa!=0:
+				
+				#value is the rack chosen  
+				#newlist is the tapes list
+				
+				db = sqlite3.connect('SaedRobot.db')
+				cur = db.cursor()
+				cur.execute("select slot from inventory where RACK=?;",value)
+				slotsList = cur.fetchall()
+				DeliveryList =[1,2,3]
+
+				for item in slotsList:
+					if item[0] in DeliveryList:
+						DeliveryList.remove(item[0])
+
+				for item in DeliveryList:
+					print item
+	
+				db.close()
+				racknumber=value
+				slot1=0
+				slot2=0
+				slot3=0
+				
+				looping=len(newlist)
+				for i in range (looping ,3):
+					newlist.(0)
+				
+				print newlist
+				slot1=newlist[0]
+				slot2=newlist[1]
+				slot3=newlist[2]	
+				
+				
+				package = preparePacket(value,slot1,slot2,slot3)
+				
+				
 				dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"Delivery is in progress")
 				dialog1.set_title("Confirmation message")
 				dialog1.run()
@@ -188,4 +236,49 @@ class ChooseDes():
 	def onLogoutButtonPressedButtonPressed(self, button):
 		self.window.destroy()
 		self.window=login.loginClass() 
+		
+	def convertHexa(hexaRack):
+		if len(hexaRack) == 4:
+			return hexaRack
+	
+		elif len(hexaRack)<4:
+			lengthHexaRack = len(hexaRack)
+			for i in range(lengthHexaRack,4):	
+				hexaRack= "0" +hexaRack
+			return hexaRack
+		
+	
+	def convertInverse(hexaRackInverse):
+		if len(hexaRackInverse) == 4:
+			return hexaRackInverse
+	
+		elif len(hexaRackInverse)<4:
+			lengthHexaRack = len(hexaRackInverse)
+			for i in range(lengthHexaRack,4):	
+				hexaRackInverse= "F" +hexaRackInverse
+			return hexaRackInverse
+	
+
+	def preparePacket( rack, slot1, slot2, slot3):
+	
+		dataLow=0
+		dataLowInverse=0
+
+		dataHigh=0
+		dataHighInverse=0
+	
+		combineLine=str(rack)+str(slot1)+str(slot2)+str(slot3)
+	
+		hexaRack = hex(int(combineLine))
+		hexaInverseRack = hex( int (hexaRack, base=16) ^ 0xFFFF)
+
+		hexaRack = convertHexa(hexaRack[2:])
+		hexaInverseRack = convertInverse(hexaInverseRack[2:])
+		dataLow= hexaRack[2:4]
+		dataLowInverse= hexaInverseRack[2:4]
+		dataHigh= hexaRack[0:2]
+		dataHighInverse= hexaInverseRack[0:2]
+		packet= "\\xFF\\x55\\x"+str(dataLow).upper() +"\\x"+str(dataLowInverse).upper() +"\\x"+str(dataHigh).upper() +"\\x"+str(dataHighInverse).upper()
+		return packet
+	
 
