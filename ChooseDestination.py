@@ -18,6 +18,17 @@ from gi.repository import Gtk
 import MainAdminMenu
 import login
 import MainUserMenu
+import time, sys, serial
+
+
+# SERIAL INIT
+defaultPort = "/dev/tty.ROBOTISBT-210-SPPDev" # change to suit your needs
+ser = serial.Serial()
+TIMEOUT = 5 # max number of sensor request attempts
+
+#servo ID's 
+BROADCASTID = 254
+
 
 class ChooseDes():
 	
@@ -173,17 +184,21 @@ class ChooseDes():
 				
 				looping=len(newlist)
 				for i in range (looping ,3):
-					newlist.(0)
+					DeliveryList.(0)
 				
-				print newlist
+				print DeliveryList
 				slot1=newlist[0]
 				slot2=newlist[1]
 				slot3=newlist[2]	
 				
 				
-				package = preparePacket(value,slot1,slot2,slot3)
+				
+				packet = preparePacket(value,slot1,slot2,slot3)
 				
 				
+				initCom(defaultPort);
+				sendPacket(packet);
+				closeCom();
 				dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"Delivery is in progress")
 				dialog1.set_title("Confirmation message")
 				dialog1.run()
@@ -281,4 +296,115 @@ class ChooseDes():
 		packet= "\\xFF\\x55\\x"+str(dataLow).upper() +"\\x"+str(dataLowInverse).upper() +"\\x"+str(dataHigh).upper() +"\\x"+str(dataHighInverse).upper()
 		return packet
 	
-
+		
+	def initCom(port):
+	    ser.baudrate = 38400
+	    ser.port = port
+	    ser.timeout = 0.5
+	    ser.open()
+	
+	def closeCom():
+	    ser.close() # close serial connection so it is available in future
+	# end SERIAL INIT
+	
+	# PACKET HANDLING
+	def readPacket():
+	    frameIncomplete = True
+	    frameByteIndex = -1
+	    checkSum = 0
+	    packet = [0, 0, 0, 0, 0, 0]
+	    #print('reading packet...')
+	    while ser.inWaiting() > 0 and frameIncomplete:
+	        byteValue = repr(ser.read()).lstrip('b').strip('\'')
+	    #print repr(byteValue)
+	        if len(byteValue) != 4: # python uses Unicode in some cases instead of hex
+	            if byteValue == '\\\\': # python hex value is converted to char
+	                value = 92 # correct value
+	            elif byteValue == '\\t':
+	                value = 9
+	            elif byteValue == '\\n':
+	                value = 10
+	            else:
+	                value = ord(byteValue)
+	        else:
+	            value = int(byteValue.lstrip('\\').lstrip('x'), 16)
+	        #print('read: ' + byteValue + '...')
+	        if frameByteIndex == -1:
+	            if value == 255: # encountered frame beginning
+	                frameByteIndex = 0
+	                #print('frame start...')
+	        elif frameByteIndex == 6: # frame is complete
+	            packetCheckSum = ser.read()
+	            frameIncomplete = False
+	            # TODO: verify checkSum here
+	        else: # get values in frame
+	            packet[frameByteIndex] = value
+	            checkSum = checkSum + value
+	            frameByteIndex = frameByteIndex + 1
+	    #print('packet complete...')
+	    return packet
+	
+	def sendPacket(packet):
+	    
+	  
+	    #ser.write(chr(255 - ((packet[0] + packet[1] + packet[2] + packet[3] + packet[4] + packet[5]) % 256))) # checksum
+	    ser.write(packet)
+	    time.sleep(0.030303030303030303) # this very roughly sends commands at 33Hz
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
