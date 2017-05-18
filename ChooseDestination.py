@@ -22,7 +22,7 @@ import time, sys, serial
 
 
 # SERIAL INIT
-defaultPort = "/dev/tty.ROBOTISBT-210-SPPDev" # change to suit your needs
+defaultPort = "/dev/rfcomm0" # change to suit your needs
 ser = serial.Serial()
 TIMEOUT = 5 # max number of sensor request attempts
 
@@ -61,16 +61,15 @@ class ChooseDes():
 			
 		#list1 = cur.fetchall()
 		#db.close()
-		print self.list_tapes
-		print (3-len(self.list_tapes))
-		arwa = 3-len(self.list_tapes)
+		
+		emptySlots = 3-len(self.list_tapes)
 		db = sqlite3.connect('SaedRobot.db')
 		cur = db.cursor()
-		cur.execute("select rackname from (select rackstatus.rackname as rackname ,count(inventory.rack) as countt from  rackstatus  left join inventory on rackstatus.rackname= inventory.rack where rackstatus.status=1  group by rackstatus.rackname) where countt<= ?",(arwa,))
+		cur.execute("select rackname from (select rackstatus.rackname as rackname ,count(inventory.rack) as countt from  rackstatus  left join inventory on rackstatus.rackname= inventory.rack where rackstatus.status=1  group by rackstatus.rackname) where countt<= ?",(emptySlots,))
 		list1 = cur.fetchall()
 		db.close()
 		
-		print list1
+		
 
 		
 		#connect to the desired window from glade file
@@ -170,17 +169,15 @@ class ChooseDes():
 				cur = db.cursor()
 				cur.execute("select slot from inventory where RACK=?;",(value,))
 				slotsList = cur.fetchall()
-				print "slots in db"
-				print slotsList
+				
 				DeliveryList =[1,2,3]
 
 				for item in slotsList:
 					if item[0] in DeliveryList:
 						DeliveryList.remove(item[0])
-					print item
+					
 
-				print "items in del lis"
-				print DeliveryList
+				
 				
 	
 				db.close()
@@ -198,12 +195,8 @@ class ChooseDes():
 				slot3=DeliveryList[2]	
 				
 				
-				print "final delivery list"
-
-				print DeliveryList
 				
-				aa= self.preparePacket(value,slot1,slot2,slot3)
-				print aa
+				packet= self.preparePacket(value,slot1,slot2,slot3)
 				
 				self.initCom(defaultPort);
 				self.sendPacket(packet);
@@ -293,7 +286,6 @@ class ChooseDes():
 		dic = {'A':1 ,'B':2, 'C':3 ,'D':4 ,'E':5 ,'F':6 ,'G':7 ,'H':8 ,'I':9}
 		rack = dic[rack]
 		combineLine=str(rack)+str(slot1)+str(slot2)+str(slot3)
-		print combineLine
 	
 		hexaRack = hex(int(combineLine))
 		hexaInverseRack = hex( int (hexaRack, base=16) ^ 0xFFFF)
@@ -304,7 +296,8 @@ class ChooseDes():
 		dataLowInverse= hexaInverseRack[2:4]
 		dataHigh= hexaRack[0:2]
 		dataHighInverse= hexaInverseRack[0:2]
-		packet= "\\xFF\\x55\\x"+str(dataLow).upper() +"\\x"+str(dataLowInverse).upper() +"\\x"+str(dataHigh).upper() +"\\x"+str(dataHighInverse).upper()
+		packet= "\xFF"+ "\x55" +chr( int(str(dataLow).upper(),16))+ chr( int (str(dataLowInverse).upper() ,16))+chr(int( str(dataHigh).upper(),16))+ chr( int( str(dataHighInverse).upper(),16))
+		
 		return packet
 	
 		
