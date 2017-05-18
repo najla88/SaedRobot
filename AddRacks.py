@@ -40,7 +40,7 @@ class AddRack():
 		#connect to the db
 		dbA = sqlite3.connect('SaedRobot.db')
 		curA = dbA.cursor()
-		curA.execute("SELECT RACKNAME from movement where STATE=0")
+		curA.execute("SELECT RACKNAME from rackstatus where status=0")
 		list2 = curA.fetchall()
 		dbA.close()
 		
@@ -109,9 +109,9 @@ class AddRack():
 		dbA1 = sqlite3.connect('SaedRobot.db', timeout = 4000)
 		cA1 = dbA1.cursor()
 		#update query to activate the rack status
-		cA1.execute("update movement set STATE=1 where RACKNAME=?" , (value,))
+		cA1.execute("update rackstatus set status=1 where RACKNAME=?" , (value,))
 		dbA1.commit()
-		cA1.execute("SELECT RACKNAME from movement where STATE=0")
+		cA1.execute("SELECT RACKNAME from rackstatus where status=0")
 		list3A = cA1.fetchall()
 		dbA1.close()
 		dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"The Rack has been added successfully")

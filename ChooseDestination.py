@@ -61,14 +61,16 @@ class ChooseDes():
 			
 		#list1 = cur.fetchall()
 		#db.close()
-		
+		print self.list_tapes
+		print (3-len(self.list_tapes))
+		arwa = 3-len(self.list_tapes)
 		db = sqlite3.connect('SaedRobot.db')
 		cur = db.cursor()
-		cur.execute("SELECT RACK  FROM (select RACK, count (*) AS COUNTT from inventory where RACK in (SELECT RACKNAME from movement where STATE=1) group by RACK) WHERE COUNTT <= ? ;",3-len(self.list_tapes))
-
+		cur.execute("select rackname from (select rackstatus.rackname as rackname ,count(inventory.rack) as countt from  rackstatus  left join inventory on rackstatus.rackname= inventory.rack where rackstatus.status=1  group by rackstatus.rackname) where countt<= ?",(arwa,))
 		list1 = cur.fetchall()
 		db.close()
 		
+		print list1
 
 		
 		#connect to the desired window from glade file
@@ -157,6 +159,7 @@ class ChooseDes():
 				dialog1.run()
 				dialog1.close()
 				
+				
 			#successful delivery
 			elif sa!=0:
 				
@@ -165,40 +168,46 @@ class ChooseDes():
 				
 				db = sqlite3.connect('SaedRobot.db')
 				cur = db.cursor()
-				cur.execute("select slot from inventory where RACK=?;",value)
+				cur.execute("select slot from inventory where RACK=?;",(value,))
 				slotsList = cur.fetchall()
+				print "slots in db"
+				print slotsList
 				DeliveryList =[1,2,3]
 
 				for item in slotsList:
 					if item[0] in DeliveryList:
 						DeliveryList.remove(item[0])
-
-				for item in DeliveryList:
 					print item
+
+				print "items in del lis"
+				print DeliveryList
+				
 	
 				db.close()
 				racknumber=value
 				slot1=0
 				slot2=0
 				slot3=0
-				
+				DeliveryList=DeliveryList[:len(newlist)]
 				looping=len(newlist)
 				for i in range (looping ,3):
-					DeliveryList.(0)
+					DeliveryList.append(0)
 				
+				slot1=DeliveryList[0]
+				slot2=DeliveryList[1]
+				slot3=DeliveryList[2]	
+				
+				
+				print "final delivery list"
+
 				print DeliveryList
-				slot1=newlist[0]
-				slot2=newlist[1]
-				slot3=newlist[2]	
 				
+				aa= self.preparePacket(value,slot1,slot2,slot3)
+				print aa
 				
-				
-				packet = preparePacket(value,slot1,slot2,slot3)
-				
-				
-				initCom(defaultPort);
-				sendPacket(packet);
-				closeCom();
+				self.initCom(defaultPort);
+				self.sendPacket(packet);
+				self.closeCom();
 				dialog1 = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,"Delivery is in progress")
 				dialog1.set_title("Confirmation message")
 				dialog1.run()
@@ -252,7 +261,7 @@ class ChooseDes():
 		self.window.destroy()
 		self.window=login.loginClass() 
 		
-	def convertHexa(hexaRack):
+	def convertHexa(self,hexaRack):
 		if len(hexaRack) == 4:
 			return hexaRack
 	
@@ -263,7 +272,7 @@ class ChooseDes():
 			return hexaRack
 		
 	
-	def convertInverse(hexaRackInverse):
+	def convertInverse(self,hexaRackInverse):
 		if len(hexaRackInverse) == 4:
 			return hexaRackInverse
 	
@@ -274,21 +283,23 @@ class ChooseDes():
 			return hexaRackInverse
 	
 
-	def preparePacket( rack, slot1, slot2, slot3):
+	def preparePacket(self, rack, slot1, slot2, slot3):
 	
 		dataLow=0
 		dataLowInverse=0
 
 		dataHigh=0
 		dataHighInverse=0
-	
+		dic = {'A':1 ,'B':2, 'C':3 ,'D':4 ,'E':5 ,'F':6 ,'G':7 ,'H':8 ,'I':9}
+		rack = dic[rack]
 		combineLine=str(rack)+str(slot1)+str(slot2)+str(slot3)
+		print combineLine
 	
 		hexaRack = hex(int(combineLine))
 		hexaInverseRack = hex( int (hexaRack, base=16) ^ 0xFFFF)
 
-		hexaRack = convertHexa(hexaRack[2:])
-		hexaInverseRack = convertInverse(hexaInverseRack[2:])
+		hexaRack = self.convertHexa(hexaRack[2:])
+		hexaInverseRack = self.convertInverse(hexaInverseRack[2:])
 		dataLow= hexaRack[2:4]
 		dataLowInverse= hexaInverseRack[2:4]
 		dataHigh= hexaRack[0:2]
@@ -297,18 +308,18 @@ class ChooseDes():
 		return packet
 	
 		
-	def initCom(port):
+	def initCom(self,port):
 	    ser.baudrate = 38400
 	    ser.port = port
 	    ser.timeout = 0.5
 	    ser.open()
 	
-	def closeCom():
+	def closeCom(self):
 	    ser.close() # close serial connection so it is available in future
 	# end SERIAL INIT
 	
 	# PACKET HANDLING
-	def readPacket():
+	def readPacket(self):
 	    frameIncomplete = True
 	    frameByteIndex = -1
 	    checkSum = 0
@@ -344,7 +355,7 @@ class ChooseDes():
 	    #print('packet complete...')
 	    return packet
 	
-	def sendPacket(packet):
+	def sendPacket(self,packet):
 	    
 	  
 	    #ser.write(chr(255 - ((packet[0] + packet[1] + packet[2] + packet[3] + packet[4] + packet[5]) % 256))) # checksum

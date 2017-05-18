@@ -41,7 +41,7 @@ class ManageRack():
 		#connect to the db
 		db = sqlite3.connect('SaedRobot.db')
 		cur = db.cursor()
-		cur.execute("SELECT RACKNAME from movement where STATE=1")
+		cur.execute("SELECT RACKNAME from rackstatus where status=1")
 		list1 = cur.fetchall()
 		db.close()
 		
@@ -115,9 +115,9 @@ class ManageRack():
 			#connect to db+deactivate the rack
 			db1 = sqlite3.connect('SaedRobot.db', timeout = 4000)
 			c1 = db1.cursor()
-			c1.execute("update movement set STATE=0 where RACKNAME=?" , (value,))
+			c1.execute("update rackstatus set status=0 where RACKNAME=?" , (value,))
 			db1.commit()
-			c1.execute("SELECT RACKNAME from movement where STATE=1")
+			c1.execute("SELECT RACKNAME from rackstatus where status=1")
 			list3 = c1.fetchall()
 			db1.close()
 		
