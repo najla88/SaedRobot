@@ -205,6 +205,9 @@ class ChooseDes():
 				dialog1.set_title("Confirmation message")
 				dialog1.run()
 				dialog1.close()
+				c = db.cursor()
+				c.execute("update inventory set RACK=? where VOLSER in ?" , (racknumber,DeliveryList,))
+				db.commit()
 			
 				
 				
